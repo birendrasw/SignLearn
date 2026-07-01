@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analisis Belajar — SignLearn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1E293B;
+    }
+    
+    .app-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar & Header style consistency from dashboard.html */
+    .db-sidebar {
+      background: #F8FAFC;
+      border-right: 1px solid #E2E8F0;
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+    }
+    .sidebar-brand {
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .sidebar-item.active a {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .sidebar-item a:hover:not(.active a) {
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+    .sidebar-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 2rem 0;
+    }
+    .btn-continue-sidebar {
+      background: #1A56DB;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 9999px;
+      text-align: center;
+      display: block;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.15);
+      transition: all 0.2s ease;
+    }
+    .btn-continue-sidebar:hover {
+      background: #154ec1;
+      transform: translateY(-1px);
+    }
+    .bottom-menu {
+      margin-top: auto;
+    }
+
+    .main-container {
+      background: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Nav */
+    .main-header {
+      height: 68px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 100;
+    }
+    .header-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .header-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      padding: 0.5rem 0;
+    }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: 240px;
+      margin-left: 2rem;
+    }
+    .header-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .header-btn {
+      background: none;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    .header-btn:hover {
+      background: #F1F5F9;
+    }
+    .avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      overflow: hidden;
+    }
+    .avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .db-content {
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Page specific layouts */
+    .analysis-grid-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+    }
+
+    .analysis-card-custom {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    /* CSS line chart simulator */
+    .accuracy-trend-chart-box {
+      height: 160px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-top: 20px;
+      position: relative;
+      border-bottom: 2px solid #E2E8F0;
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-axis-grid {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #F1F5F9;
+    }
+
+    .chart-point-bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bar-line-simulator {
+      width: 12px;
+      border-radius: 9999px;
+      background: linear-gradient(to top, #AECBFC 0%, #1A56DB 100%);
+      transition: height 0.5s ease;
+    }
+
+    .bar-line-lbl {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748B;
+      margin-top: 8px;
+    }
+
+    /* Strength List */
+    .strength-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    
+    .strength-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ECFDF5;
+      color: #10B981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .weakness-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #FFFBEB;
+      color: #F59E0B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+      .analysis-grid-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .main-header {
+        padding: 0 1.5rem;
+      }
+      .db-content {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="db-sidebar">
+      <div class="sidebar-brand">
+        <h2 class="brand-title">SignLearn</h2>
+        <span class="brand-subtitle">Learning Hub</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="achievements.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+            </svg>
+            Achievements
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="mentors.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Mentors
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="exercise.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Exercise
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="videos.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Videos
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lesson.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Modules
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="results.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Results
+          </a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="analysis.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+            Analysis
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-container">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-links">
+          <a href="dashboard.html" class="header-link">Home</a>
+          <a href="lesson.html" class="header-link">Modules</a>
+          <a href="resources.html" class="header-link">Resources</a>
+          <a href="learn.html" class="header-link">Library</a>
+          
+          <div class="header-search">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" placeholder="Cari analisis..." />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" aria-label="Notifications">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          
+          <button class="header-btn" aria-label="Help">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          
+          <div class="avatar-small">
+            <img src="assets/images/user_avatar.png" alt="Avatar" style="opacity: 0.9; object-position: top;" />
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="db-content">
+        <div style="margin-bottom: 2rem;">
+          <h1 class="welcome-title">📈 Analisis Belajar</h1>
+          <p class="welcome-subtitle" style="margin-top: 4px; margin-bottom: 0;">Lacak performa kuis, akurasi gerakan isyarat, dan visualisasikan statistik belajarmu.</p>
+        </div>
+
+        <div class="analysis-grid-layout">
+          <div>
+            <!-- GRAPH CARD: ACCURACY TREND -->
+            <div class="analysis-card-custom">
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin: 0 0 1rem 0;">Perkembangan Akurasi Isyarat</h3>
+              <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Grafik akurasi kuis dari Modul 1 hingga Modul 2.</p>
+              
+              <div class="accuracy-trend-chart-box">
+                <!-- Grid Lines -->
+                <div class="chart-axis-grid" style="bottom: 120px;"></div>
+                <div class="chart-axis-grid" style="bottom: 80px;"></div>
+                <div class="chart-axis-grid" style="bottom: 40px;"></div>
+                
+                <!-- Columns -->
+                <div class="chart-point-bar-col">
+                  <div class="bar-line-simulator" style="height: 70px;"></div>
+                  <span class="bar-line-lbl">Modul 1.1</span>
+                </div>
+                <div class="chart-point-bar-col">
+                  <div class="bar-line-simulator" style="height: 95px;"></div>
+                  <span class="bar-line-lbl">Modul 1.2</span>
+                </div>
+                <div class="chart-point-bar-col">
+                  <div class="bar-line-simulator" style="height: 110px;"></div>
+                  <span class="bar-line-lbl">Ujian M1</span>
+                </div>
+                <div class="chart-point-bar-col">
+                  <div class="bar-line-simulator" style="height: 80px;"></div>
+                  <span class="bar-line-lbl">Modul 2.1</span>
+                </div>
+                <div class="chart-point-bar-col">
+                  <div class="bar-line-simulator" style="height: 125px;"></div>
+                  <span class="bar-line-lbl">Kuis M2.2</span>
+                </div>
+              </div>
+              <p style="font-size: 0.88rem; color: #64748B; margin: 0; line-height: 1.5; text-align: center;">
+                Rata-rata akurasi kuis meningkat sebesar <b>15%</b> di bulan Juni.
+              </p>
+            </div>
+          </div>
+
+          <!-- STRENGTHS & SUGGESTIONS -->
+          <div>
+            <div class="analysis-card-custom">
+              <h3 style="font-size: 1rem; font-weight: 800; color: #1E293B; margin: 0 0 1rem 0;">Kekuatan Anda</h3>
+              <div class="strength-list-item">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="strength-icon">✓</div>
+                  <span style="font-size: 0.9rem; font-weight: 600;">Ejaan Jari (Spelling)</span>
+                </div>
+                <span style="font-size: 0.88rem; font-weight: 700; color: #10B981;">98% Akurasi</span>
+              </div>
+              <div class="strength-list-item">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="strength-icon">✓</div>
+                  <span style="font-size: 0.9rem; font-weight: 600;">Pengenalan Angka</span>
+                </div>
+                <span style="font-size: 0.88rem; font-weight: 700; color: #10B981;">95% Akurasi</span>
+              </div>
+            </div>
+
+            <div class="analysis-card-custom">
+              <h3 style="font-size: 1rem; font-weight: 800; color: #1E293B; margin: 0 0 1rem 0;">Perlu Peningkatan</h3>
+              <div class="strength-list-item">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="weakness-icon">!</div>
+                  <span style="font-size: 0.9rem; font-weight: 600;">Kosakata Percakapan</span>
+                </div>
+                <span style="font-size: 0.88rem; font-weight: 700; color: #F59E0B;">65% Akurasi</span>
+              </div>
+              <p style="font-size: 0.85rem; color: #64748B; margin-top: 1rem; line-height: 1.6;">
+                <b>Saran:</b> Tonton ulang video tutorial percakapan di halaman <a href="videos.html" style="color: #1A56DB; font-weight: 700;">Video</a> dan ikuti latihan mencocokkan kosakata percakapan di halaman <a href="exercise.html" style="color: #1A56DB; font-weight: 700;">Latihan</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

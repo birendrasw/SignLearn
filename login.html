@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masuk — SignLearn</title>
+  <meta name="description" content="Masuk ke akun SignLearn Anda dan lanjutkan belajar bahasa isyarat." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: linear-gradient(135deg, #EBF2FF 0%, #F0F4FF 60%, #FEF9EE 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .auth-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; max-width: 960px; width: 100%; }
+    .auth-left { padding: 2rem 0; }
+    .auth-img-card { background: linear-gradient(135deg, #dbeafe, #e0e7ff); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: 1.75rem; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.6); }
+    .auth-img-card img { width: 100%; height: 280px; object-fit: cover; }
+    .auth-left-title { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; line-height: 1.2; }
+    .auth-left-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+    .auth-card { background: #fff; border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--shadow-xl); border: 1px solid var(--border); }
+    .auth-logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 1.75rem; }
+    .auth-logo .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .auth-title { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem; }
+    .auth-subtitle { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 2rem; }
+    .auth-form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 768px) {
+      .auth-wrapper { grid-template-columns: 1fr; }
+      .auth-left { display: none; }
+      .auth-card { padding: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-left">
+      <div class="auth-img-card">
+        <img src="assets/images/sign_hands.png" alt="Pintu Menuju Dunia Isyarat" />
+      </div>
+      <h2 class="auth-left-title">Pintu Menuju<br/>Dunia Isyarat</h2>
+      <p class="auth-left-desc">Bergabunglah dengan ribuan siswa yang membangun jembatan komunikasi melalui bahasa isyarat yang inklusif.</p>
+      <div style="display:flex;gap:1.5rem;margin-top:1.5rem;">
+        <div><div style="font-size:1.4rem;font-weight:800;color:var(--primary);">50K+</div><div style="font-size:0.75rem;color:var(--text-muted);">Siswa Aktif</div></div>
+        <div><div style="font-size:1.4rem;font-weight:800;color:var(--primary);">120+</div><div style="font-size:0.75rem;color:var(--text-muted);">Materi</div></div>
+        <div><div style="font-size:1.4rem;font-weight:800;color:var(--primary);">98%</div><div style="font-size:0.75rem;color:var(--text-muted);">Puas</div></div>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-logo"><div class="brand-icon">🤟</div>SignLearn</div>
+      <h1 class="auth-title">Selamat Datang di SignLearn</h1>
+      <p class="auth-subtitle">Silakan masuk untuk melanjutkan belajar bahasa isyarat.</p>
+
+      <form class="auth-form" id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <div class="form-input-wrap">
+            <span class="input-icon">✉️</span>
+            <input class="form-input" type="email" id="email" name="email" placeholder="nama@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label-row">
+            <label class="form-label" for="password">Kata Sandi</label>
+            <a href="#" class="form-link" style="font-size:0.8rem;">Lupa Kata Sandi?</a>
+          </div>
+          <div class="form-input-wrap">
+            <span class="input-icon">🔒</span>
+            <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required />
+            <span class="input-icon-right toggle-password">👁️</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <input type="checkbox" id="remember" style="width:16px;height:16px;accent-color:var(--primary);" />
+          <label for="remember" style="font-size:0.85rem;color:var(--text-secondary);cursor:pointer;">Ingat saya</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn"> Masuk</button>
+      </form>
+
+      <div class="divider" style="margin:1.5rem 0;">atau</div>
+
+      <button class="btn btn-google btn-full" onclick="window.location.href='dashboard.html'">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Masuk dengan Google
+      </button>
+
+      <p style="text-align:center;margin-top:1.5rem;font-size:0.875rem;color:var(--text-secondary);">
+        Belum punya akun? <a href="register.html" class="form-link">Daftar Sekarang</a>
+      </p>
+      <p style="text-align:center;margin-top:0.75rem;"><a href="index.html" class="form-link" style="font-size:0.8rem;color:var(--text-muted);">← Kembali ke Beranda</a></p>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

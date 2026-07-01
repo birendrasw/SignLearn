@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources & Komunitas — SignLearn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Reset & Custom Layout overrides */
+    body {
+      background: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1E293B;
+    }
+    
+    /* Layout Wrapper */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styling */
+    .db-sidebar {
+      background: #F8FAFC;
+      border-right: 1px solid #E2E8F0;
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+    }
+    .sidebar-brand {
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .sidebar-item.active a {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .sidebar-item a:hover:not(.active a) {
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+    .sidebar-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 2rem 0;
+    }
+    .btn-continue-sidebar {
+      background: #1A56DB;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 9999px;
+      text-align: center;
+      display: block;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.15);
+      transition: all 0.2s ease;
+    }
+    .btn-continue-sidebar:hover {
+      background: #154ec1;
+      transform: translateY(-1px);
+    }
+    .bottom-menu {
+      margin-top: auto;
+    }
+
+    /* Main Container */
+    .main-container {
+      background: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Nav */
+    .main-header {
+      height: 68px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 100;
+    }
+    .header-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .header-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    .header-link.active {
+      color: #1A56DB;
+      border-bottom: 2px solid #003580;
+    }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: 240px;
+      margin-left: 2rem;
+    }
+    .header-search svg {
+      color: #94A3B8;
+      margin-right: 8px;
+    }
+    .header-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .header-btn {
+      background: none;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    .header-btn:hover {
+      background: #F1F5F9;
+    }
+    .avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #475569;
+      overflow: hidden;
+    }
+    .avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Content Area */
+    .db-content {
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Resources Hero Banner */
+    .resources-hero-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3.5rem;
+    }
+    .resources-hero-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #003580;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.75px;
+    }
+    .resources-hero-desc {
+      font-size: 1.05rem;
+      color: #64748B;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .hero-btn-row {
+      display: flex;
+      gap: 1rem;
+    }
+    .btn-explore-all {
+      background: #003580;
+      color: #FFFFFF;
+      padding: 0.75rem 1.75rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 53, 128, 0.15);
+    }
+    .btn-explore-all:hover {
+      background: #002860;
+      transform: translateY(-1px);
+    }
+    .btn-community-join {
+      background: #E8F0FE;
+      color: #475569;
+      padding: 0.75rem 1.75rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-community-join:hover {
+      background: #D4E4FD;
+      color: #1A56DB;
+    }
+    .resources-hero-img-container {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 16/12;
+    }
+    .resources-hero-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Section Headers */
+    .section-header-custom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .section-title-custom {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0;
+    }
+    .see-all-link {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1A56DB;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .see-all-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Featured Unggulan Week Card */
+    .featured-week-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .featured-tablet-container {
+      background: #F8FAFC;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      border: 1px solid #F1F5F9;
+    }
+    .featured-tablet-container img {
+      width: 100%;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+    .featured-info-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .badge-best-seller {
+      background: #EBF2FF;
+      color: #1A56DB;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+    .featured-card-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #003580;
+      margin: 0 0 1rem 0;
+      line-height: 1.3;
+    }
+    .featured-card-desc {
+      font-size: 0.9rem;
+      color: #64748B;
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+    }
+    .featured-meta-row {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.75rem;
+      font-size: 0.85rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    .featured-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .featured-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: #64748B;
+    }
+    .featured-meta-item svg.star-filled {
+      color: #F59E0B;
+    }
+    .btn-download-now {
+      background: #003580;
+      color: #FFFFFF;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-download-now:hover {
+      background: #002860;
+    }
+
+    /* Filter & Search Row */
+    .filter-search-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .pill-btn {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 9999px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pill-btn.active {
+      background: #003580;
+      border-color: #003580;
+      color: #FFFFFF;
+    }
+    .pill-btn:hover:not(.active) {
+      border-color: #1A56DB;
+      color: #1A56DB;
+      background: #F8FAFC;
+    }
+    .search-resources-box {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      padding: 6px 14px;
+      border-radius: 8px;
+      width: 260px;
+    }
+    .search-resources-box svg {
+      color: #94A3B8;
+      margin-right: 8px;
+    }
+    .search-resources-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+
+    /* 3-Column Resources Grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .resource-item-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: all 0.25s ease;
+    }
+    .resource-item-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #CBD5E1;
+    }
+
+    /* Card type 1: Image Card (Culture) */
+    .card-img-wrapper {
+      height: 180px;
+      position: relative;
+      background: #E2E8F0;
+    }
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .badge-card-overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #EBF2FF;
+      color: #1A56DB;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-content-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-title-main {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0 0 8px 0;
+      line-height: 1.3;
+    }
+    .card-desc-main {
+      font-size: 0.85rem;
+      color: #64748B;
+      line-height: 1.5;
+      margin: 0 0 1.5rem 0;
+      flex-grow: 1;
+    }
+    .card-link-action {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1A56DB;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease;
+    }
+    .card-link-action:hover {
+      gap: 8px;
+    }
+
+    /* Card type 2: Community Forum Card */
+    .card-forum-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .forum-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #EBF2FF;
+      color: #1A56DB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .forum-icon-circle svg {
+      width: 18px;
+      height: 18px;
+    }
+    .forum-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .forum-title-h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0;
+    }
+    .forum-subtitle-h5 {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      margin: 2px 0 0 0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+    .forum-list-topics {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .forum-topic-item {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #F1F5F9;
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+    .forum-topic-item:hover {
+      background: #F8FAFC;
+    }
+    .topic-title-p {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin: 0 0 4px 0;
+      line-height: 1.4;
+    }
+    .topic-replies-meta {
+      font-size: 0.75rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+    .topic-replies-meta svg {
+      width: 12px;
+      height: 12px;
+    }
+    .btn-view-all-forum {
+      margin: 1.25rem 1.5rem 1.5rem 1.5rem;
+      background: #E8F0FE;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      display: block;
+      transition: all 0.2s ease;
+    }
+    .btn-view-all-forum:hover {
+      background: #D4E4FD;
+      color: #1A56DB;
+    }
+
+    /* Card type 3: Video Tutorial Card */
+    .video-thumbnail-wrapper {
+      height: 180px;
+      position: relative;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-thumbnail-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+    .video-play-btn-overlay {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      background: rgba(26, 86, 219, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .video-play-btn-overlay:hover {
+      transform: scale(1.08);
+      background: rgba(26, 86, 219, 1);
+    }
+    .video-meta-row-card {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.78rem;
+      color: #94A3B8;
+      font-weight: 600;
+      margin-top: auto;
+    }
+    .video-meta-item-card {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .video-meta-item-card svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Newsletter Call-to-Action banner */
+    .newsletter-banner-box {
+      background: linear-gradient(135deg, #003580 0%, #1A56DB 100%);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      color: #FFFFFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(26, 86, 219, 0.15);
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+    .newsletter-text-col {
+      max-width: 540px;
+    }
+    .newsletter-title-h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.5px;
+    }
+    .newsletter-desc-p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .newsletter-form-col {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      width: 420px;
+    }
+    .newsletter-input-email {
+      background: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 0.9rem;
+      color: #1E293B;
+      flex-grow: 1;
+      box-shadow: var(--shadow-sm);
+    }
+    .newsletter-input-email::placeholder {
+      color: #94A3B8;
+    }
+    .btn-subscribe-submit {
+      background: #FFFFFF;
+      color: #003580;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-subscribe-submit:hover {
+      background: #F1F5F9;
+      transform: translateY(-1px);
+    }
+
+    /* Page Footer Copyright */
+    .page-footer-copyright {
+      border-top: 1px solid #E2E8F0;
+      padding: 1.75rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 1100px) {
+      .resources-hero-row {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .resources-hero-img-container {
+        max-width: 500px;
+        margin: 0 auto;
+        order: -1;
+      }
+      .featured-week-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .featured-tablet-container {
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .newsletter-banner-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .newsletter-form-col {
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .main-header {
+        padding: 0 1.5rem;
+      }
+      .db-content {
+        padding: 2rem 1.5rem;
+      }
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="db-sidebar">
+      <div class="sidebar-brand">
+        <h2 class="brand-title">SignLearn</h2>
+        <span class="brand-subtitle">Learning Hub</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="achievements.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+            </svg>
+            Achievements
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="mentors.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Mentors
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="exercise.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Exercise
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="videos.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Videos
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lesson.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Modules
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="results.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Results
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analysis.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+            Analysis
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-container">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-links">
+          <a href="dashboard.html" class="header-link">Home</a>
+          <a href="lesson.html" class="header-link">Modules</a>
+          <a href="resources.html" class="header-link active">Resources</a>
+          <a href="learn.html" class="header-link">Library</a>
+          
+          <div class="header-search">
+            <!-- Search Icon SVG -->
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" placeholder="Cari materi..." />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" aria-label="Notifications">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          
+          <button class="header-btn" aria-label="Help">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          
+          <div class="avatar-small">
+            <img src="assets/images/user_avatar.png" alt="Avatar" style="opacity: 0.9; object-position: top;" />
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="db-content">
+        
+        <!-- HERO ROW -->
+        <section class="resources-hero-row">
+          <div>
+            <h1 class="resources-hero-title">Resources & Komunitas</h1>
+            <p class="resources-hero-desc">
+              Perdalam pemahaman Anda tentang budaya Tuli dan perluas kosakata isyarat Anda dengan koleksi materi eksklusif dan forum diskusi interaktif.
+            </p>
+            <div class="hero-btn-row">
+              <button class="btn-explore-all" id="exploreAllBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8l-2 4 4-2-2 4-4 2 2-4 4 2"></path>
+                </svg>
+                Jelajahi Semua
+              </button>
+              <button class="btn-community-join" id="joinCommBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                Gabung Komunitas
+              </button>
+            </div>
+          </div>
+          <div class="resources-hero-img-container">
+            <img src="assets/images/resources_hero.png" alt="Resources & Komunitas" />
+          </div>
+        </section>
+
+        <!-- FEATURED WEEK SECTION -->
+        <section style="margin-bottom: 3.5rem;">
+          <div class="section-header-custom">
+            <h2 class="section-title-custom">Unggulan Minggu Ini</h2>
+            <a href="#" class="see-all-link">
+              Lihat Semua
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+
+          <div class="featured-week-card">
+            <div class="featured-tablet-container">
+              <img src="assets/images/resources_tablet.png" alt="Tablet Mockup" />
+            </div>
+            <div class="featured-info-col">
+              <span class="badge-best-seller">E-Book Terlaris</span>
+              <h3 class="featured-card-title">Kamus Isyarat Lengkap: Edisi Visual 2024</h3>
+              <p class="featured-card-desc">
+                Lebih dari 5.000 kosa kata dalam format video HD dan ilustrasi 3D. Dirancang khusus untuk membantu pemula memahami nuansa ekspresi wajah dan posisi tangan secara akurat.
+              </p>
+              
+              <div class="featured-meta-row">
+                <div class="featured-meta-item">
+                  <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  2.4k Unduhan
+                </div>
+                <div class="featured-meta-item">
+                  <svg class="star-filled" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  4.9 (820 Ulasan)
+                </div>
+              </div>
+
+              <button class="btn-download-now" id="downloadEbookBtn">Unduh Sekarang</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- FILTER & GRID SECTION -->
+        <section style="margin-bottom: 2rem;">
+          <div class="filter-search-row">
+            <div class="filter-pills">
+              <button class="pill-btn active" data-filter="all">Semua</button>
+              <button class="pill-btn" data-filter="ebooks">E-Books</button>
+              <button class="pill-btn" data-filter="videos">Videos</button>
+              <button class="pill-btn" data-filter="community">Komunitas</button>
+            </div>
+            
+            <div class="search-resources-box">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input type="text" placeholder="Cari di Resources..." id="searchResourcesInput" />
+            </div>
+          </div>
+
+          <!-- GRID -->
+          <div class="resources-grid">
+            
+            <!-- Card 1: Materi Budaya Tuli -->
+            <div class="resource-item-card" data-type="ebooks">
+              <div class="card-img-wrapper">
+                <img src="assets/images/resources_culture.png" alt="Materi Budaya Tuli" />
+                <span class="badge-card-overlay">Budaya</span>
+              </div>
+              <div class="card-content-body">
+                <h3 class="card-title-main">Materi Budaya Tuli</h3>
+                <p class="card-desc-main">
+                  Pahami etika, sejarah, dan nilai-nilai dalam komunitas Tuli. Panduan penting untuk membangun interaksi yang setara dan inklusif.
+                </p>
+                <a href="#" class="card-link-action" id="readCultureBtn">
+                  Baca Selengkapnya
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2: Diskusi Komunitas -->
+            <div class="resource-item-card" data-type="community">
+              <div class="card-forum-header">
+                <div class="forum-icon-circle">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                  </svg>
+                </div>
+                <div class="forum-title-group">
+                  <h4 class="forum-title-h4">Diskusi Komunitas</h4>
+                  <h5 class="forum-subtitle-h5">Populer Hari Ini</h5>
+                </div>
+              </div>
+              
+              <ul class="forum-list-topics">
+                <li class="forum-topic-item" onclick="window.showToast('Membuka diskusi tips menguasai isyarat...', 'info')">
+                  <p class="topic-title-p">Tips Menguasai Isyarat Alfabet dalam 1 Hari</p>
+                  <span class="topic-replies-meta">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    42 Balasan
+                  </span>
+                </li>
+                <li class="forum-topic-item" onclick="window.showToast('Membuka diskusi pengalaman jarak jauh...', 'info')">
+                  <p class="topic-title-p">Pengalaman Belajar Jarak Jauh: Suka & Duka</p>
+                  <span class="topic-replies-meta">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    28 Balasan
+                  </span>
+                </li>
+              </ul>
+              
+              <a href="#" class="btn-view-all-forum" id="viewAllForumBtn">Lihat Semua Diskusi</a>
+            </div>
+
+            <!-- Card 3: Video Percakapan Dasar -->
+            <div class="resource-item-card" data-type="videos">
+              <div class="video-thumbnail-wrapper">
+                <img src="assets/images/resources_video_thumb.png" alt="Video Percakapan Dasar" />
+                <div class="video-play-btn-overlay" id="playResourceVideoBtn">▶</div>
+              </div>
+              <div class="card-content-body">
+                <h3 class="card-title-main">Video: Percakapan Dasar</h3>
+                <p class="card-desc-main">
+                  Kumpulan video percakapan sehari-hari di kafe, kantor, dan transportasi umum yang dipandu langsung oleh pengajar asli Tuli.
+                </p>
+                
+                <div class="video-meta-row-card">
+                  <div class="video-meta-item-card">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    120 Menit
+                  </div>
+                  <div class="video-meta-item-card">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    1.2k ditonton
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- NEWSLETTER SECTION -->
+        <section class="newsletter-banner-box">
+          <div class="newsletter-text-col">
+            <h3 class="newsletter-title-h3">Ingin Materi Baru Setiap Minggu?</h3>
+            <p class="newsletter-desc-p">
+              Berlangganan newsletter kami untuk mendapatkan tips belajar dan materi eksklusif langsung di email Anda.
+            </p>
+          </div>
+          <form class="newsletter-form-col" id="newsletterForm">
+            <input type="email" placeholder="Alamat email Anda" class="newsletter-input-email" required />
+            <button type="submit" class="btn-subscribe-submit">Langganan</button>
+          </form>
+        </section>
+
+        <!-- FOOTER COPYRIGHT -->
+        <footer class="page-footer-copyright">
+          © 2026 SignLearn Hub. Didukung oleh Komunitas Tuli Indonesia.
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pill Filter Logic
+      const pills = document.querySelectorAll('.pill-btn');
+      const cards = document.querySelectorAll('.resource-item-card');
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          const filter = pill.getAttribute('data-filter');
+
+          cards.forEach(card => {
+            const cardType = card.getAttribute('data-type');
+            if (filter === 'all' || cardType === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Search bar logic for resources
+      const searchInput = document.getElementById('searchResourcesInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase().trim();
+          cards.forEach(card => {
+            const title = card.querySelector('.card-title-main, .forum-title-h4')?.textContent.toLowerCase() || '';
+            const desc = card.querySelector('.card-desc-main, .forum-list-topics')?.textContent.toLowerCase() || '';
+            
+            if (title.includes(query) || desc.includes(query)) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // Newsletter submit handler
+      const newsletterForm = document.getElementById('newsletterForm');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = newsletterForm.querySelector('input').value;
+          window.showToast(`Berhasil berlangganan dengan email: ${email}`, 'success');
+          newsletterForm.reset();
+        });
+      }
+
+      // Action buttons toast triggers
+      document.getElementById('exploreAllBtn')?.addEventListener('click', () => {
+        window.showToast('Membuka penelusuran seluruh resources...', 'success');
+      });
+      document.getElementById('joinCommBtn')?.addEventListener('click', () => {
+        window.showToast('Selamat bergabung di Komunitas SignLearn! Silakan cek forum diskusi.', 'success');
+      });
+      document.getElementById('downloadEbookBtn')?.addEventListener('click', () => {
+        window.showToast('Memulai pengunduhan E-Book Kamus Isyarat Lengkap...', 'success');
+      });
+      document.getElementById('readCultureBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.showToast('Membuka materi Budaya Tuli...', 'success');
+      });
+      document.getElementById('viewAllForumBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.showToast('Menampilkan semua topik diskusi...', 'success');
+      });
+      document.getElementById('playResourceVideoBtn')?.addEventListener('click', () => {
+        window.showToast('Memutar video tutorial percakapan dasar...', 'success');
+      });
+    });
+  </script>
+</body>
+</html>

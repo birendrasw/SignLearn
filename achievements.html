@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pencapaian Belajar — SignLearn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@700;900&display=swap');
+
+    /* Reset & Custom Layout overrides */
+    body {
+      background: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1E293B;
+    }
+    
+    /* Layout Wrapper */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styling */
+    .db-sidebar {
+      background: #F8FAFC;
+      border-right: 1px solid #E2E8F0;
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+    }
+    .sidebar-brand {
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .sidebar-item.active a {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .sidebar-item a:hover:not(.active a) {
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+    .sidebar-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 2rem 0;
+    }
+    .btn-continue-sidebar {
+      background: #1A56DB;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 9999px;
+      text-align: center;
+      display: block;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.15);
+      transition: all 0.2s ease;
+    }
+    .btn-continue-sidebar:hover {
+      background: #154ec1;
+      transform: translateY(-1px);
+    }
+    .bottom-menu {
+      margin-top: auto;
+    }
+
+    /* Main Container */
+    .main-container {
+      background: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Nav */
+    .main-header {
+      height: 68px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 100;
+    }
+    .header-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .header-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    .header-link.active {
+      color: #1A56DB;
+    }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: 240px;
+      margin-left: 2rem;
+    }
+    .header-search svg {
+      color: #94A3B8;
+      margin-right: 8px;
+    }
+    .header-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .header-btn {
+      background: none;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    .header-btn:hover {
+      background: #F1F5F9;
+    }
+    .avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #475569;
+      overflow: hidden;
+    }
+    .avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Content Area */
+    .db-content {
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* Breadcrumb */
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: #64748B;
+      margin-top: 6px;
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+    }
+    .breadcrumb span {
+      color: #94A3B8;
+      font-weight: normal;
+      margin: 0 4px;
+    }
+    .breadcrumb a {
+      color: #64748B;
+    }
+    .breadcrumb a:hover {
+      color: #1A56DB;
+    }
+    .breadcrumb-active {
+      color: #1E293B !important;
+      font-weight: 700;
+    }
+
+    .welcome-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    /* Stats Cards Grid */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card-custom {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .stat-icon-square {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .stat-icon-square.blue { background: #E8F0FE; color: #1A56DB; }
+    .stat-icon-square.light-blue { background: #EBF2FF; color: #3B82F6; }
+    .stat-icon-square.gray { background: #F1F5F9; color: #475569; }
+    .stat-info-custom {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-label-custom {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .stat-val-custom {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1E293B;
+    }
+
+    /* Main Grid Section (Skill & Leaderboard) */
+    .main-grid-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .panel-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .panel-header-custom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.75rem;
+    }
+    .panel-title-custom {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-subtitle-tag {
+      font-size: 0.8rem;
+      color: #1A56DB;
+      font-weight: 700;
+    }
+
+    /* Skills Progress list */
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .skill-item-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .skill-label-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .skill-progress-bg {
+      height: 6px;
+      background: #F1F5F9;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .skill-progress-bar {
+      height: 100%;
+      background: #1A56DB;
+      border-radius: 9999px;
+    }
+
+    /* Leaderboard list */
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      transition: background 0.2s ease;
+    }
+    .leaderboard-item.me {
+      background: #E8F0FE;
+    }
+    .leaderboard-left-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .rank-num {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #475569;
+      width: 20px;
+    }
+    .leaderboard-item.me .rank-num {
+      color: #1A56DB;
+    }
+    .leader-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+    .leaderboard-item.me .leader-avatar {
+      background: #1A56DB;
+      color: #FFFFFF;
+    }
+    .leader-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .leader-xp {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #1A56DB;
+    }
+    .leaderboard-item:not(.me) .leader-xp {
+      color: #475569;
+    }
+
+    /* Badge Collection Section */
+    .badge-section {
+      margin-bottom: 2.5rem;
+    }
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .badge-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .badge-card.active-special {
+      border: 2px solid #1A56DB;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.08);
+    }
+    .badge-card.locked-custom {
+      border: 1px dashed #CBD5E1;
+      background: #F8FAFC;
+      opacity: 0.6;
+    }
+    .badge-tag-baru {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #1A56DB;
+      color: #FFFFFF;
+      font-size: 0.55rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .badge-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: #475569;
+    }
+    .badge-card.active-special .badge-card-icon {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .badge-card-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .badge-card-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+    .badge-card-desc {
+      font-size: 0.68rem;
+      color: #64748B;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Certificate Section */
+    .certificate-section {
+      margin-bottom: 2rem;
+    }
+    .certificate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+    .certificate-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .certificate-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .certificate-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+      flex-shrink: 0;
+    }
+    .certificate-icon-box svg {
+      width: 22px;
+      height: 22px;
+    }
+    .certificate-title-text {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0 0 3px 0;
+    }
+    .certificate-date-text {
+      font-size: 0.78rem;
+      color: #64748B;
+      margin: 0;
+    }
+    .btn-download-pdf {
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      color: #475569;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-download-pdf:hover {
+      border-color: #1A56DB;
+      color: #1A56DB;
+      background: #F8FAFC;
+    }
+    .certificate-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .btn-cert-lihat {
+      background: #1A56DB;
+      color: #FFFFFF;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-cert-lihat:hover {
+      background: #2563EB;
+      transform: translateY(-1px);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .main-grid-row {
+        grid-template-columns: 1fr;
+      }
+      .badge-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .certificate-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .main-header {
+        padding: 0 1.5rem;
+      }
+      .db-content {
+        padding: 2rem 1.5rem;
+      }
+      .stats-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .badge-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* --- Certificate Modal --- */
+    .cert-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .cert-modal.active {
+      display: flex;
+    }
+    
+    .cert-modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+    }
+    
+    .cert-modal-container {
+      position: relative;
+      background: #FFFFFF;
+      width: 90%;
+      max-width: 960px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      z-index: 2002;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      animation: modalFadeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    @keyframes modalFadeIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .cert-modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .cert-modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin: 0;
+    }
+    
+    .cert-modal-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      margin: 2px 0 0 0;
+      font-weight: 500;
+    }
+    
+    .cert-modal-close {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      line-height: 1;
+      color: #94A3B8;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      padding: 0 5px;
+    }
+    
+    .cert-modal-close:hover {
+      color: #0F172A;
+    }
+    
+    .cert-modal-body {
+      padding: 2.5rem;
+      background: #F1F5F9;
+      overflow-y: auto;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .cert-modal-footer {
+      padding: 1.25rem 2rem;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F8FAFC;
+    }
+    
+    .cert-tip {
+      font-size: 0.8rem;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    
+    .cert-tip-icon {
+      font-size: 1rem;
+    }
+    
+    .cert-modal-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .btn-modal-print {
+      background: #1A56DB;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.25);
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-modal-print:hover {
+      background: #2563EB;
+      transform: translateY(-1px);
+    }
+    
+    .btn-modal-close-action {
+      background: #FFFFFF;
+      color: #475569;
+      border: 1px solid #E2E8F0;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-modal-close-action:hover {
+      background: #F1F5F9;
+      color: #0F172A;
+    }
+
+    /* --- Premium Certificate Document --- */
+    .certificate-document {
+      width: 800px;
+      height: 565px;
+      background: #FAF9F6;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      padding: 12px;
+      box-sizing: border-box;
+      position: relative;
+    }
+    
+    .cert-border-frame {
+      width: 100%;
+      height: 100%;
+      background: #0E397B; /* Deep Navy Blue */
+      padding: 16px;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Elegant Gold Lines in Navy Border */
+    .cert-border-frame::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1.5px solid #D97706; /* gold line */
+      pointer-events: none;
+    }
+    
+    .cert-border-frame::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 0.5px solid #FCD34D; /* thin gold line */
+      pointer-events: none;
+    }
+    
+    .cert-inner-content {
+      width: 100%;
+      height: 100%;
+      background: #FAF9F6; /* warm paper cream */
+      border: 2px solid #D97706; /* Gold border around content */
+      padding: 2.2rem 3rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    
+    .cert-header-title {
+      font-family: 'Georgia', serif;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #0E397B;
+      text-align: center;
+      letter-spacing: 0.5px;
+      margin-top: 0.2rem;
+    }
+    
+    .cert-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-top: 2px;
+      text-align: center;
+    }
+    
+    .cert-main-title {
+      font-family: 'Cinzel Decorative', 'Georgia', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #0E397B;
+      text-align: center;
+      margin: 1rem 0 0.25rem 0;
+      letter-spacing: 0.5px;
+    }
+    
+    .cert-presented {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #64748B;
+      text-align: center;
+    }
+    
+    .cert-recipient-name {
+      font-family: 'Alex Brush', 'Brush Script MT', cursive;
+      font-size: 3.2rem;
+      font-weight: bold;
+      color: #0F172A;
+      text-align: center;
+      border-bottom: 1.5px solid #CBD5E1;
+      display: inline-block;
+      padding: 0 3rem 0.1rem 3rem;
+      margin: 0.25rem 0;
+      line-height: 1;
+    }
+    
+    .cert-completion-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #334155;
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 0.2rem;
+    }
+    
+    .cert-completion-text strong {
+      color: #0F172A;
+      font-weight: 700;
+    }
+    
+    .cert-recognition-text {
+      font-family: 'Georgia', serif;
+      font-size: 0.85rem;
+      color: #475569;
+      text-align: center;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+    
+    .cert-footer-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 0.2rem;
+    }
+    
+    .cert-footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    
+    .cert-date-line {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #0F172A;
+      font-weight: 600;
+    }
+    
+    .cert-signature-area {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .cert-sig-svg-new {
+      width: 120px;
+      height: 30px;
+      margin-bottom: 4px;
+    }
+    
+    .cert-signature-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      color: #475569;
+      font-weight: 600;
+      border-top: 1px solid #CBD5E1;
+      padding-top: 4px;
+      width: 220px;
+      text-align: left;
+    }
+    
+    .cert-seal-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.5rem;
+    }
+    
+    .cert-seal-ribbons {
+      position: absolute;
+      top: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+    
+    .cert-gold-seal-new {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* --- Premium Certificate Template 2 (Percakapan) --- */
+    .cert-percakapan-frame {
+      width: 100%;
+      height: 100%;
+      background: #FFFFFF;
+      border: 8px solid #0E397B;
+      padding: 2.2rem 3rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    
+    .cert-percakapan-frame::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      border: 1px solid #0E397B;
+      pointer-events: none;
+    }
+    
+    .cert-percakapan-frame::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      border: 1.5px solid #CBD5E1;
+      pointer-events: none;
+    }
+    
+    .cert-corner-ornate {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      fill: none;
+      stroke: #0E397B;
+      stroke-width: 1.5;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .cert-corner-ornate.tl { top: 12px; left: 12px; }
+    .cert-corner-ornate.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+    .cert-corner-ornate.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+    .cert-corner-ornate.br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+    body.dark-theme .cert-percakapan-frame {
+      background: #FFFFFF !important;
+      border-color: #0E397B !important;
+    }
+
+    /* --- Dark Theme overrides for local components --- */
+    body.dark-theme .stat-card-custom,
+    body.dark-theme .panel-card,
+    body.dark-theme .badge-card,
+    body.dark-theme .certificate-card {
+      background: #0F172A !important;
+      border-color: #1E293B !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
+    }
+    body.dark-theme .stat-val-custom,
+    body.dark-theme .panel-title-custom,
+    body.dark-theme .badge-card-title,
+    body.dark-theme .certificate-title-text {
+      color: #F8FAFC !important;
+    }
+    body.dark-theme .stat-label-custom,
+    body.dark-theme .badge-card-desc,
+    body.dark-theme .certificate-date-text {
+      color: #94A3B8 !important;
+    }
+    body.dark-theme .badge-card-icon,
+    body.dark-theme .certificate-icon-box {
+      background: #1E293B !important;
+      color: #CBD5E1 !important;
+    }
+    body.dark-theme .badge-card.active-special {
+      border-color: #3B82F6 !important;
+    }
+    body.dark-theme .badge-card.locked-custom {
+      border-color: #1E293B !important;
+      background: #0F172A !important;
+    }
+    body.dark-theme .skill-progress-bg {
+      background: #1E293B !important;
+    }
+    body.dark-theme .leaderboard-item.me {
+      background: #1E3A8A !important;
+    }
+    body.dark-theme .leaderboard-item.me .rank-num,
+    body.dark-theme .leaderboard-item.me .leader-xp {
+      color: #60A5FA !important;
+    }
+    body.dark-theme .leader-name {
+      color: #CBD5E1 !important;
+    }
+    body.dark-theme .rank-num,
+    body.dark-theme .leader-xp {
+      color: #94A3B8 !important;
+    }
+    body.dark-theme .leader-avatar {
+      background: #1E293B !important;
+      color: #CBD5E1 !important;
+    }
+    body.dark-theme .btn-download-pdf {
+      background: #1E293B !important;
+      border-color: #334155 !important;
+      color: #94A3B8 !important;
+    }
+    body.dark-theme .btn-download-pdf:hover {
+      background: #334155 !important;
+      color: #F8FAFC !important;
+      border-color: #60A5FA !important;
+    }
+    body.dark-theme .btn-cert-lihat {
+      background: #1E3A8A !important;
+      color: #60A5FA !important;
+    }
+    body.dark-theme .btn-cert-lihat:hover {
+      background: #1D4ED8 !important;
+      color: #FFFFFF !important;
+    }
+    body.dark-theme .cert-modal-container {
+      background: #0F172A;
+    }
+    body.dark-theme .cert-modal-header {
+      border-bottom-color: #1E293B;
+    }
+    body.dark-theme .cert-modal-title {
+      color: #F8FAFC;
+    }
+    body.dark-theme .cert-modal-subtitle {
+      color: #94A3B8;
+    }
+    body.dark-theme .cert-modal-footer {
+      background: #1E293B;
+      border-top-color: #1E293B;
+    }
+    body.dark-theme .btn-modal-close-action {
+      background: #1E293B;
+      color: #94A3B8;
+      border-color: #334155;
+    }
+    body.dark-theme .btn-modal-close-action:hover {
+      background: #334155;
+      color: #F8FAFC;
+    }
+    body.dark-theme .cert-tip {
+      color: #94A3B8;
+    }
+    body.dark-theme .cert-modal-body {
+      background: #0B0F19;
+    }
+
+    /* --- Print Styling --- */
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .app-layout {
+        display: none !important;
+      }
+      
+      .cert-modal {
+        display: block !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: none !important;
+        overflow: visible !important;
+      }
+      
+      .cert-modal-backdrop,
+      .cert-modal-header,
+      .cert-modal-footer {
+        display: none !important;
+      }
+      
+      .cert-modal-container {
+        box-shadow: none !important;
+        border: none !important;
+        background: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: 100% !important;
+        max-height: none !important;
+        position: static !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        animation: none !important;
+      }
+      
+      .cert-modal-body {
+        padding: 0 !important;
+        background: none !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 100vh !important;
+      }
+      
+      .certificate-document {
+        box-shadow: none !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        border: none !important;
+        transform: scale(0.95);
+        transform-origin: center;
+      }
+      
+      @page {
+        size: landscape;
+        margin: 0.5cm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="db-sidebar">
+      <div class="sidebar-brand">
+        <h2 class="brand-title">SignLearn</h2>
+        <span class="brand-subtitle">Learning Hub</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="achievements.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+            </svg>
+            Achievements
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="mentors.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Mentors
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="exercise.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Exercise
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="videos.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Videos
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lesson.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Modules
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="results.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Results
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analysis.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+            Analysis
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-container">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-links">
+          <a href="dashboard.html" class="header-link">Home</a>
+          <a href="lesson.html" class="header-link">Modules</a>
+          <a href="resources.html" class="header-link">Resources</a>
+          <a href="learn.html" class="header-link">Library</a>
+          
+          <div class="header-search">
+            <!-- Search Icon SVG -->
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" placeholder="Cari materi..." />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" aria-label="Notifications">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          
+          <button class="header-btn" aria-label="Help">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          
+          <div class="avatar-small">
+            <img src="assets/images/user_avatar.png" alt="Avatar" style="opacity: 0.9; object-position: top;" />
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="db-content">
+        <h1 class="welcome-title" style="color:#1E293B;">Pencapaian Belajar</h1>
+        <div class="breadcrumb">
+          <a href="dashboard.html">Home</a> <span>/</span> <span class="breadcrumb-active">Pencapaian</span>
+        </div>
+
+        <!-- STATS CARD ROW -->
+        <section class="stats-row">
+          <div class="stat-card-custom">
+            <div class="stat-icon-square blue">
+              <!-- Rounded Checkbox SVG -->
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="stat-info-custom">
+              <span class="stat-label-custom">Modul Selesai</span>
+              <span class="stat-val-custom">24 Modul</span>
+            </div>
+          </div>
+          
+          <div class="stat-card-custom">
+            <div class="stat-icon-square light-blue">
+              <!-- Clock SVG -->
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="stat-info-custom">
+              <span class="stat-label-custom">Jam Belajar</span>
+              <span class="stat-val-custom">128 Jam</span>
+            </div>
+          </div>
+          
+          <div class="stat-card-custom">
+            <div class="stat-icon-square gray">
+              <!-- Flame Icon SVG -->
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div class="stat-info-custom">
+              <span class="stat-label-custom">Streak Saat Ini</span>
+              <span class="stat-val-custom">15 Hari</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- GRID ROW (SKILLS & LEADERBOARD) -->
+        <div class="main-grid-row">
+          <!-- Skill Mastery -->
+          <div class="panel-card">
+            <div class="panel-header-custom">
+              <h3 class="panel-title-custom">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                Penguasaan Skill SIBI
+              </h3>
+              <span class="panel-subtitle-tag">Level Menengah</span>
+            </div>
+            
+            <div class="skills-list">
+              <!-- Skill 1 -->
+              <div class="skill-item-row">
+                <div class="skill-label-line">
+                  <span>Bentuk Tangan (Handshapes)</span>
+                  <span>85%</span>
+                </div>
+                <div class="skill-progress-bg">
+                  <div class="skill-progress-bar" style="width: 85%;"></div>
+                </div>
+              </div>
+              
+              <!-- Skill 2 -->
+              <div class="skill-item-row">
+                <div class="skill-label-line">
+                  <span>Ekspresi Wajah</span>
+                  <span>72%</span>
+                </div>
+                <div class="skill-progress-bg">
+                  <div class="skill-progress-bar" style="width: 72%;"></div>
+                </div>
+              </div>
+              
+              <!-- Skill 3 -->
+              <div class="skill-item-row">
+                <div class="skill-label-line">
+                  <span>Kosakata (Vocabulary)</span>
+                  <span>90%</span>
+                </div>
+                <div class="skill-progress-bg">
+                  <div class="skill-progress-bar" style="width: 90%;"></div>
+                </div>
+              </div>
+              
+              <!-- Skill 4 -->
+              <div class="skill-item-row">
+                <div class="skill-label-line">
+                  <span>Struktur Kalimat</span>
+                  <span>64%</span>
+                </div>
+                <div class="skill-progress-bg">
+                  <div class="skill-progress-bar" style="width: 64%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard -->
+          <div class="panel-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="panel-header-custom" style="margin-bottom: 1.25rem;">
+                <h3 class="panel-title-custom">Papan Peringkat</h3>
+              </div>
+              
+              <div class="leaderboard-list">
+                <!-- Rank 1 -->
+                <div class="leaderboard-item">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">1</span>
+                    <div class="leader-avatar">A</div>
+                    <span class="leader-name">Andi Wijaya</span>
+                  </div>
+                  <span class="leader-xp">2,450 XP</span>
+                </div>
+                
+                <!-- Hidden Ranks (2-11) -->
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">2</span>
+                    <div class="leader-avatar">B</div>
+                    <span class="leader-name">Budi Santoso</span>
+                  </div>
+                  <span class="leader-xp">2,300 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">3</span>
+                    <div class="leader-avatar">C</div>
+                    <span class="leader-name">Citra Dewi</span>
+                  </div>
+                  <span class="leader-xp">2,150 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">4</span>
+                    <div class="leader-avatar">D</div>
+                    <span class="leader-name">Dian Pramana</span>
+                  </div>
+                  <span class="leader-xp">2,100 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">5</span>
+                    <div class="leader-avatar">E</div>
+                    <span class="leader-name">Eko Prasetyo</span>
+                  </div>
+                  <span class="leader-xp">2,050 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">6</span>
+                    <div class="leader-avatar">F</div>
+                    <span class="leader-name">Fajar Hidayat</span>
+                  </div>
+                  <span class="leader-xp">2,000 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">7</span>
+                    <div class="leader-avatar">G</div>
+                    <span class="leader-name">Gita Savitri</span>
+                  </div>
+                  <span class="leader-xp">1,950 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">8</span>
+                    <div class="leader-avatar">H</div>
+                    <span class="leader-name">Hadi Sucipto</span>
+                  </div>
+                  <span class="leader-xp">1,900 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">9</span>
+                    <div class="leader-avatar">I</div>
+                    <span class="leader-name">Indah Permata</span>
+                  </div>
+                  <span class="leader-xp">1,880 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">10</span>
+                    <div class="leader-avatar">J</div>
+                    <span class="leader-name">Joko Anwar</span>
+                  </div>
+                  <span class="leader-xp">1,850 XP</span>
+                </div>
+                <div class="leaderboard-item hidden-rank" style="display: none;">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">11</span>
+                    <div class="leader-avatar">K</div>
+                    <span class="leader-name">Kevin Sanjaya</span>
+                  </div>
+                  <span class="leader-xp">1,830 XP</span>
+                </div>
+
+                <!-- Rank 12 (Me) -->
+                <div class="leaderboard-item me">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num" style="font-weight: 800;">12</span>
+                    <div class="leader-avatar">ME</div>
+                    <span class="leader-name" style="font-weight: 800;">Anda</span>
+                  </div>
+                  <span class="leader-xp">1,820 XP</span>
+                </div>
+                
+                <!-- Rank 13 -->
+                <div class="leaderboard-item">
+                  <div class="leaderboard-left-group">
+                    <span class="rank-num">13</span>
+                    <div class="leader-avatar">S</div>
+                    <span class="leader-name">Siti Aminah</span>
+                  </div>
+                  <span class="leader-xp">1,795 XP</span>
+                </div>
+              </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+              <button onclick="showAllRanks(event)" style="background: #F1F5F9; border: none; color: #1A56DB; padding: 10px 20px; border-radius: 9999px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; font-family: inherit;">Lihat Semua Peringkat</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BADGE COLLECTION SECTION -->
+        <section class="badge-section">
+          <div class="achievements-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 class="achievements-title" style="margin-bottom: 0;">Koleksi Lencana</h3>
+            <button onclick="toggleBadgesAchievements(event)" style="background: #F1F5F9; border: none; color: #1A56DB; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; font-family: inherit;">Lihat Semua</button>
+          </div>
+          
+          <div class="badge-grid">
+            <!-- Badge 1 (New, Highlighted) -->
+            <div class="badge-card active-special">
+              <span class="badge-tag-baru">BARU</span>
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Master of Conversation</h4>
+              <p class="badge-card-desc">Selesaikan 50 percakapan</p>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="badge-card">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">First Hello</h4>
+              <p class="badge-card-desc">Sapaan pertama Anda</p>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="badge-card">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Abjad Expert</h4>
+              <p class="badge-card-desc">Hafal semua huruf</p>
+            </div>
+
+            <!-- Badge 4 (Locked) -->
+            <div class="badge-card locked-custom">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Professional</h4>
+              <p class="badge-card-desc">Selesaikan Level Pro</p>
+            </div>
+
+            <!-- Badge 5 (Locked) -->
+            <div class="badge-card locked-custom">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Fast Learner</h4>
+              <p class="badge-card-desc">10 modul dalam 1 hari</p>
+            </div>
+
+            <!-- Badge 6 (Locked) -->
+            <div class="badge-card locked-custom">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Community Hero</h4>
+              <p class="badge-card-desc">Bantu 10 teman baru</p>
+            </div>
+            
+            <!-- Hidden Badge 1 -->
+            <div class="badge-card hidden-badge-achievements" style="display: none;">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Grammar Guru</h4>
+              <p class="badge-card-desc">Selesaikan modul struktur</p>
+            </div>
+            
+            <!-- Hidden Badge 2 -->
+            <div class="badge-card hidden-badge-achievements" style="display: none;">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Quiz Master</h4>
+              <p class="badge-card-desc">Sempurna di 5 kuis</p>
+            </div>
+            
+            <!-- Hidden Badge 3 -->
+            <div class="badge-card hidden-badge-achievements" style="display: none;">
+              <div class="badge-card-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h4 class="badge-card-title">Speed Runner</h4>
+              <p class="badge-card-desc">Tamat dalam 30 hari</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- DIGITAL CERTIFICATES SECTION -->
+        <section class="certificate-section">
+          <div class="achievements-header">
+            <h3 class="achievements-title">Sertifikat Digital</h3>
+            <a href="#" class="form-link" style="font-size:0.9rem; font-weight: 700;">Lihat Semua</a>
+          </div>
+          
+          <div class="certificate-grid">
+            <!-- Cert 1 -->
+            <div class="certificate-card" onclick="openCertModal('dasar')" style="cursor: pointer;">
+              <div class="certificate-left">
+                <div class="certificate-icon-box">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="certificate-title-text">Sertifikat Dasar 1</h4>
+                  <p class="certificate-date-text">Diterbitkan pada 12 Mei 2023</p>
+                </div>
+              </div>
+              <div class="certificate-actions">
+                <button class="btn-cert-lihat" onclick="event.stopPropagation(); openCertModal('dasar')">
+                  Lihat
+                </button>
+                <button class="btn-download-pdf" onclick="event.stopPropagation(); printCertDirect('dasar')">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  Unduh PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Cert 2 -->
+            <div class="certificate-card" onclick="openCertModal('percakapan')" style="cursor: pointer;">
+              <div class="certificate-left">
+                <div class="certificate-icon-box">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="certificate-title-text">Sertifikat Percakapan 2</h4>
+                  <p class="certificate-date-text">Diterbitkan pada 28 Nov 2023</p>
+                </div>
+              </div>
+              <div class="certificate-actions">
+                <button class="btn-cert-lihat" onclick="event.stopPropagation(); openCertModal('percakapan')">
+                  Lihat
+                </button>
+                <button class="btn-download-pdf" onclick="event.stopPropagation(); printCertDirect('percakapan')">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  Unduh PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE MODAL -->
+  <div id="certModal" class="cert-modal">
+    <div class="cert-modal-backdrop" onclick="closeCertModal()"></div>
+    <div class="cert-modal-container">
+      <div class="cert-modal-header">
+        <div>
+          <h3 class="cert-modal-title">Pratinjau Sertifikat Resmi</h3>
+          <p class="cert-modal-subtitle">Terverifikasi oleh SignLearn Indonesia</p>
+        </div>
+        <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>
+      </div>
+      <div class="cert-modal-body">
+        <div id="certificate-print-area" class="certificate-document">
+          <!-- Template 1: Dasar (Navy & Gold border, cursive name, seal on right) -->
+          <div id="cert-dasar-view" class="cert-border-frame">
+            <!-- Inner white area -->
+            <div class="cert-inner-content">
+              <div class="cert-credential-id-badge" style="position: absolute; top: 15px; right: 20px; font-family: 'Inter', sans-serif; font-size: 0.65rem; color: #64748B; font-weight: 600;">
+                ID Kredensial: <strong id="cert-cred-id" style="color: #0E397B;">SL-D1-2024-4581</strong>
+              </div>
+              <div class="cert-header-title">SignLearn Educational Platform</div>
+              <div class="cert-subtitle">Credential of Excellence</div>
+              
+              <!-- Gothic title -->
+              <div class="cert-main-title" id="cert-title-gothic">Sertifikat Dasar 1</div>
+              
+              <div class="cert-presented">Presented to</div>
+              
+              <!-- Cursive name -->
+              <div class="cert-recipient-name" id="cert-recipient">Ahmad Siswa</div>
+              
+              <!-- Course completion text -->
+              <div class="cert-completion-text">
+                Has successfully completed the comprehensive training program<br>
+                and assessment for <strong id="cert-course-bold">Sertifikat Dasar 1</strong>
+              </div>
+              
+              <div class="cert-recognition-text">
+                In recognition of dedication and outstanding performance<br>
+                in foundational knowledge and skills.
+              </div>
+              
+              <div class="cert-footer-row">
+                <!-- Left: Date & Signature -->
+                <div class="cert-footer-left">
+                  <div class="cert-date-line">
+                    Date of Completion: <span id="cert-completion-date">October 26, 2024</span>
+                  </div>
+                  <div class="cert-signature-area">
+                    <svg class="cert-sig-svg-new" viewBox="0 0 150 40">
+                      <path d="M10,25 Q35,5 50,20 T90,15 T130,22" fill="none" stroke="#0F172A" stroke-width="1.8" />
+                      <path d="M25,28 C50,15 70,8 110,20" fill="none" stroke="#0F172A" stroke-width="1.2" />
+                    </svg>
+                    <div class="cert-signature-title">Director, SignLearn Educational Platform</div>
+                  </div>
+                </div>
+                
+                <!-- Right: Gold Seal with Ribbons -->
+                <div class="cert-seal-container">
+                  <!-- Ribbon tails -->
+                  <svg class="cert-seal-ribbons" viewBox="0 0 60 70" width="60" height="70">
+                    <polygon points="18,10 8,65 18,55 28,65" fill="#D97706" />
+                    <polygon points="18,10 8,65 18,55" fill="#B45309" opacity="0.3" />
+                    <polygon points="38,10 28,65 38,55 48,65" fill="#D97706" />
+                    <polygon points="38,10 28,65 38,55" fill="#92400E" opacity="0.3" />
+                  </svg>
+                  
+                  <!-- Round Scalloped Gold Seal -->
+                  <svg class="cert-gold-seal-new" viewBox="0 0 100 100" width="90" height="90">
+                    <defs>
+                      <radialGradient id="gold-grad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#FCD34D" />
+                        <stop offset="70%" stop-color="#F59E0B" />
+                        <stop offset="100%" stop-color="#D97706" />
+                      </radialGradient>
+                    </defs>
+                    <path d="M 50,0 L 53,10 L 63,4 L 62,15 L 72,11 L 68,21 L 78,21 L 71,30 L 80,33 L 72,40 L 79,49 L 70,55 L 75,65 L 65,68 L 68,78 L 57,78 L 58,89 L 48,86 L 46,96 L 38,91 L 34,100 L 28,92 L 22,100 L 19,90 L 11,95 L 11,85 L 3,87 L 6,77 L 0,72 L 5,63 L 0,56 L 7,50 L 3,40 L 11,37 L 9,27 L 18,27 L 19,16 L 28,20 L 31,10 L 39,17 L 44,7 Z" fill="url(#gold-grad)" />
+                    <circle cx="50" cy="50" r="38" fill="none" stroke="#FBBF24" stroke-width="1.5" />
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="3 1.5" />
+                    <circle cx="50" cy="50" r="28" fill="#F59E0B" stroke="#D97706" stroke-width="1" />
+                    <path d="M 32,50 A 18,18 0 0,0 68,50" fill="none" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4 2" />
+                    <path d="M 32,50 A 18,18 0 0,1 68,50" fill="none" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4 2" />
+                    <text x="50" y="58" font-family="'Georgia', serif" font-size="24" font-weight="bold" fill="#78350F" text-anchor="middle" letter-spacing="1">SL</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Template 2: Percakapan (Ornate corner flourishes, logo top center, serif name, metrics row, seal bottom center) -->
+          <div id="cert-percakapan-view" class="cert-percakapan-frame" style="display: none;">
+            <!-- Corner flourishes -->
+            <svg class="cert-corner-ornate tl" viewBox="0 0 100 100">
+              <path d="M 0,0 L 0,80 M 0,0 L 80,0" stroke-dasharray="none" />
+              <path d="M 8,8 L 8,70 M 8,8 L 70,8" stroke="#94A3B8" stroke-width="1" />
+              <path d="M 12,12 C 22,22 22,35 12,45 C 5,35 5,22 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 12,12 C 22,22 35,22 45,12 C 35,5 22,5 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 15,35 C 25,35 35,25 35,15" stroke-width="1.2" />
+              <path d="M 20,45 C 35,45 45,35 45,20" stroke-width="1" />
+              <path d="M 25,55 C 45,55 55,45 55,25" stroke-width="0.8" stroke="#94A3B8" />
+              <circle cx="15" cy="35" r="2.5" fill="#0E397B" />
+              <circle cx="35" cy="15" r="2.5" fill="#0E397B" />
+            </svg>
+            <svg class="cert-corner-ornate tr" viewBox="0 0 100 100">
+              <path d="M 0,0 L 0,80 M 0,0 L 80,0" stroke-dasharray="none" />
+              <path d="M 8,8 L 8,70 M 8,8 L 70,8" stroke="#94A3B8" stroke-width="1" />
+              <path d="M 12,12 C 22,22 22,35 12,45 C 5,35 5,22 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 12,12 C 22,22 35,22 45,12 C 35,5 22,5 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 15,35 C 25,35 35,25 35,15" stroke-width="1.2" />
+              <path d="M 20,45 C 35,45 45,35 45,20" stroke-width="1" />
+              <path d="M 25,55 C 45,55 55,45 55,25" stroke-width="0.8" stroke="#94A3B8" />
+              <circle cx="15" cy="35" r="2.5" fill="#0E397B" />
+              <circle cx="35" cy="15" r="2.5" fill="#0E397B" />
+            </svg>
+            <svg class="cert-corner-ornate bl" viewBox="0 0 100 100">
+              <path d="M 0,0 L 0,80 M 0,0 L 80,0" stroke-dasharray="none" />
+              <path d="M 8,8 L 8,70 M 8,8 L 70,8" stroke="#94A3B8" stroke-width="1" />
+              <path d="M 12,12 C 22,22 22,35 12,45 C 5,35 5,22 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 12,12 C 22,22 35,22 45,12 C 35,5 22,5 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 15,35 C 25,35 35,25 35,15" stroke-width="1.2" />
+              <path d="M 20,45 C 35,45 45,35 45,20" stroke-width="1" />
+              <path d="M 25,55 C 45,55 55,45 55,25" stroke-width="0.8" stroke="#94A3B8" />
+              <circle cx="15" cy="35" r="2.5" fill="#0E397B" />
+              <circle cx="35" cy="15" r="2.5" fill="#0E397B" />
+            </svg>
+            <svg class="cert-corner-ornate br" viewBox="0 0 100 100">
+              <path d="M 0,0 L 0,80 M 0,0 L 80,0" stroke-dasharray="none" />
+              <path d="M 8,8 L 8,70 M 8,8 L 70,8" stroke="#94A3B8" stroke-width="1" />
+              <path d="M 12,12 C 22,22 22,35 12,45 C 5,35 5,22 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 12,12 C 22,22 35,22 45,12 C 35,5 22,5 12,12 Z" fill="#0E397B" opacity="0.1" />
+              <path d="M 15,35 C 25,35 35,25 35,15" stroke-width="1.2" />
+              <path d="M 20,45 C 35,45 45,35 45,20" stroke-width="1" />
+              <path d="M 25,55 C 45,55 55,45 55,25" stroke-width="0.8" stroke="#94A3B8" />
+              <circle cx="15" cy="35" r="2.5" fill="#0E397B" />
+              <circle cx="35" cy="15" r="2.5" fill="#0E397B" />
+            </svg>
+
+            <!-- Logo -->
+            <div class="cert-percakapan-logo-box" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 5px;">
+              <svg viewBox="0 0 100 80" width="80" height="64" style="fill: none;">
+                <g stroke="#1A56DB" stroke-width="1.5" opacity="0.8">
+                  <path d="M 30,60 C 15,50 15,30 25,15" />
+                  <path d="M 28,52 L 20,48" /><path d="M 24,42 L 16,40" /><path d="M 21,32 L 13,32" /><path d="M 21,22 L 14,25" />
+                  <path d="M 70,60 C 85,50 85,30 75,15" />
+                  <path d="M 72,52 L 80,48" /><path d="M 76,42 L 84,40" /><path d="M 79,32 L 87,32" /><path d="M 79,22 L 86,25" />
+                </g>
+                <path d="M 50,15 C 62,15 66,19 66,35 C 66,51 50,65 50,65 C 50,65 34,51 34,35 C 34,19 38,15 50,15 Z" fill="#0E397B" stroke="#1A56DB" stroke-width="1.5" />
+                <path d="M 50,20 C 58,20 61,23 61,35 C 61,47 50,58 50,58 C 50,58 39,47 39,35 C 39,23 42,20 50,20 Z" stroke="#FFFFFF" stroke-width="1" />
+                <text x="50" y="42" font-family="'Inter', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF" text-anchor="middle">SL</text>
+              </svg>
+            </div>
+
+            <!-- Title -->
+            <div class="cert-percakapan-titles" style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%;">
+              <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.85rem; color: #0E397B; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px;">
+                SIGNLEARN EDUCATIONAL PLATFORM
+              </div>
+              <div style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 2.2rem; color: #0E397B; letter-spacing: 0.5px; margin: 10px 0 2px 0; text-transform: uppercase;">
+                SERTIFIKAT PERCAKAPAN 2
+              </div>
+              <div style="font-family: 'Georgia', serif; font-style: italic; font-size: 0.85rem; color: #64748B; margin-top: 8px;">
+                This certificate is presented to
+              </div>
+            </div>
+
+            <!-- Name -->
+            <div style="font-family: 'Georgia', serif; font-size: 2.8rem; font-weight: bold; color: #0E397B; text-align: center; margin: 12px 0 15px 0; width: 100%;">
+              <span id="cert-recipient-percakapan" style="border-bottom: 2px solid #CBD5E1; padding: 0 2rem 5px 2rem; display: inline-block;">Ahmad Siswa</span>
+            </div>
+
+            <!-- Description -->
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #475569; text-align: center; max-width: 580px; line-height: 1.6; margin-bottom: 12px;">
+              For successful completion of the advanced conversational sign language course, demonstrating high proficiency in communication and comprehension.
+            </div>
+
+            <!-- Metrics Row -->
+            <div class="cert-percakapan-metrics" style="display: flex; justify-content: center; gap: 2.5rem; width: 100%; margin-bottom: 25px;">
+              <div style="display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #0F172A; font-weight: 700;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1A56DB" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" fill="#1A56DB" />
+                  <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
+                </svg>
+                <span>95% Precision Score</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #0F172A; font-weight: 700;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1A56DB" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                  <circle cx="8" cy="14" r="1" fill="#1A56DB" />
+                  <circle cx="12" cy="14" r="1" fill="#1A56DB" />
+                  <circle cx="16" cy="14" r="1" fill="#1A56DB" />
+                  <circle cx="8" cy="18" r="1" fill="#1A56DB" />
+                  <circle cx="12" cy="18" r="1" fill="#1A56DB" />
+                  <circle cx="16" cy="18" r="1" fill="#1A56DB" />
+                </svg>
+                <span id="cert-date-percakapan">28 Nov 2023</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #0F172A; font-weight: 700;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1A56DB" stroke-width="2">
+                  <circle cx="12" cy="8" r="6" />
+                  <polyline points="9,13 7,22 12,19 17,22 15,13" />
+                </svg>
+                <span id="cert-id-percakapan">SL-2023-PCK2-8821</span>
+              </div>
+            </div>
+
+            <!-- Gold Seal -->
+            <div class="cert-percakapan-seal-container" style="position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 10;">
+              <svg viewBox="0 0 60 70" width="60" height="70" style="position: absolute; top: 40px; z-index: 1; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25));">
+                <polygon points="18,10 8,65 18,55 28,65" fill="#D97706" />
+                <polygon points="18,10 8,65 18,55" fill="#B45309" opacity="0.3" />
+                <polygon points="38,10 28,65 38,55 48,65" fill="#D97706" />
+                <polygon points="38,10 28,65 38,55" fill="#92400E" opacity="0.3" />
+              </svg>
+              <svg viewBox="0 0 100 100" width="90" height="90" style="position: relative; z-index: 2; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
+                <defs>
+                  <radialGradient id="gold-grad-seal" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FCD34D" />
+                    <stop offset="70%" stop-color="#F59E0B" />
+                    <stop offset="100%" stop-color="#D97706" />
+                  </radialGradient>
+                </defs>
+                <path d="M 50,0 L 53,10 L 63,4 L 62,15 L 72,11 L 68,21 L 78,21 L 71,30 L 80,33 L 72,40 L 79,49 L 70,55 L 75,65 L 65,68 L 68,78 L 57,78 L 58,89 L 48,86 L 46,96 L 38,91 L 34,100 L 28,92 L 22,100 L 19,90 L 11,95 L 11,85 L 3,87 L 6,77 L 0,72 L 5,63 L 0,56 L 7,50 L 3,40 L 11,37 L 9,27 L 18,27 L 19,16 L 28,20 L 31,10 L 39,17 L 44,7 Z" fill="url(#gold-grad-seal)" />
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#FBBF24" stroke-width="1.5" />
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="3 1.5" />
+                <circle cx="50" cy="50" r="28" fill="#F59E0B" stroke="#D97706" stroke-width="1" />
+                <path id="seal-text-path-top" d="M 26,50 A 24,24 0 0,1 74,50" fill="none" />
+                <path id="seal-text-path-bottom" d="M 74,50 A 24,24 0 0,1 26,50" fill="none" />
+                <text fill="#78350F" font-family="'Inter', sans-serif" font-size="5.5" font-weight="900" letter-spacing="0.5">
+                  <textPath href="#seal-text-path-top" startOffset="50%" text-anchor="middle">ACHIEVEMENT SEAL</textPath>
+                </text>
+                <text fill="#78350F" font-family="'Inter', sans-serif" font-size="6" font-weight="900" letter-spacing="1">
+                  <textPath href="#seal-text-path-bottom" startOffset="50%" text-anchor="middle">SIGNLEARN</textPath>
+                </text>
+                <g stroke="#78350F" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M 38,54 C 44,51 50,51 50,54 C 50,51 56,51 62,54" />
+                  <path d="M 38,42 L 38,54" />
+                  <path d="M 50,44 L 50,54" />
+                  <path d="M 62,42 L 62,54" />
+                  <path d="M 38,42 C 44,39 50,39 50,42 C 50,39 56,39 62,42" />
+                  <path d="M 50,40 L 50,34" stroke-width="2" />
+                  <path d="M 50,34 C 48,31 50,28 50,28 C 50,28 52,31 50,34 Z" fill="#78350F" stroke-width="1" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cert-modal-footer">
+        <span class="cert-tip"><span class="cert-tip-icon">💡</span> Tips: Pilih <strong>Simpan sebagai PDF</strong> dan aktifkan <strong>Grafik Latar Belakang</strong> untuk hasil maksimal.</span>
+        <div class="cert-modal-buttons">
+          <button class="btn-modal-print" onclick="printCert()">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            Cetak / Simpan PDF
+          </button>
+          <button class="btn-modal-close-action" onclick="closeCertModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    const certData = {
+      dasar: {
+        id: 'SL-D1-2024-4581',
+        course: 'Sertifikat Dasar 1',
+        date: 'October 26, 2024',
+        recipient: 'Ahmad Siswa'
+      },
+      percakapan: {
+        id: 'SL-2023-PCK2-8821',
+        course: 'Sertifikat Percakapan 2',
+        date: '28 Nov 2023',
+        recipient: 'Ahmad Siswa'
+      }
+    };
+
+    function openCertModal(type) {
+      const data = certData[type];
+      if (!data) return;
+      
+      if (type === 'dasar') {
+        document.getElementById('cert-dasar-view').style.display = 'flex';
+        document.getElementById('cert-percakapan-view').style.display = 'none';
+        
+        document.getElementById('cert-cred-id').textContent = data.id;
+        document.getElementById('cert-title-gothic').textContent = data.course;
+        document.getElementById('cert-course-bold').textContent = data.course;
+        document.getElementById('cert-recipient').textContent = data.recipient;
+        document.getElementById('cert-completion-date').textContent = data.date;
+      } else if (type === 'percakapan') {
+        document.getElementById('cert-dasar-view').style.display = 'none';
+        document.getElementById('cert-percakapan-view').style.display = 'flex';
+        
+        document.getElementById('cert-recipient-percakapan').textContent = data.recipient;
+        document.getElementById('cert-date-percakapan').textContent = data.date;
+        document.getElementById('cert-id-percakapan').textContent = data.id;
+      }
+      
+      const modal = document.getElementById('certModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCertModal() {
+      const modal = document.getElementById('certModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function printCert() {
+      window.showToast("Mempersiapkan dokumen cetak...", "success");
+      setTimeout(() => {
+        window.print();
+      }, 800);
+    }
+
+    function printCertDirect(type) {
+      const modal = document.getElementById('certModal');
+      const wasActive = modal.classList.contains('active');
+      
+      openCertModal(type);
+      window.showToast("Mempersiapkan dokumen cetak...", "success");
+      
+      setTimeout(() => {
+        window.print();
+        if (!wasActive) {
+          closeCertModal();
+        }
+      }, 800);
+    }
+
+    function showAllRanks(e) {
+      e.preventDefault();
+      const hiddenRanks = document.querySelectorAll('.hidden-rank');
+      const isExpanded = hiddenRanks[0].style.display === 'flex';
+      
+      if (isExpanded) {
+        hiddenRanks.forEach(el => el.style.display = 'none');
+        e.target.textContent = 'Lihat Semua Peringkat';
+      } else {
+        hiddenRanks.forEach(el => el.style.display = 'flex');
+        e.target.textContent = 'Kembali';
+      }
+    }
+
+    function toggleBadgesAchievements(e) {
+      e.preventDefault();
+      const hiddenBadges = document.querySelectorAll('.hidden-badge-achievements');
+      if (hiddenBadges.length === 0) return;
+      
+      const isExpanded = hiddenBadges[0].style.display === 'flex';
+      
+      if (isExpanded) {
+        hiddenBadges.forEach(el => el.style.display = 'none');
+        e.target.textContent = 'Lihat Semua';
+      } else {
+        hiddenBadges.forEach(el => el.style.display = 'flex');
+        e.target.textContent = 'Sembunyikan';
+      }
+    }
+  </script>
+</body>
+</html>

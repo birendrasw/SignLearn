@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materi Belajar — SignLearn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Reset & Custom Layout overrides for lesson */
+    body {
+      background: #FFFFFF;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1E293B;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    /* Header Nav */
+    .main-header {
+      height: 68px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      background: #FFFFFF;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .header-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    .header-link.active {
+      color: #1A56DB;
+    }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: 240px;
+      margin-left: 2rem;
+    }
+    .header-search svg {
+      color: #94A3B8;
+      margin-right: 8px;
+    }
+    .header-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .header-btn {
+      background: none;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    .header-btn:hover {
+      background: #F1F5F9;
+    }
+    .avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #475569;
+      overflow: hidden;
+    }
+    .avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Layout Wrapper */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    /* Main Container */
+    .main-container {
+      background: #FFFFFF;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Sidebar Styling */
+    .db-sidebar {
+      background: #F8FAFC;
+      border-right: 1px solid #E2E8F0;
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .db-sidebar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    .sidebar-brand {
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .sidebar-item.active a {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .sidebar-item a:hover:not(.active a) {
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+
+    /* Main Container & Scrollable Content */
+    .main-container-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: 3rem;
+      box-sizing: border-box;
+    }
+
+    /* Content Area */
+    .db-content {
+      padding: 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Progress and Toggle Row */
+    .progress-toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .progress-column {
+      flex-grow: 1;
+      max-width: 480px;
+    }
+    .progress-label-caps {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #64748B;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .progress-bar-container-lesson {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .progress-track-lesson {
+      height: 6px;
+      background: #E2E8F0;
+      border-radius: 9999px;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+    .progress-fill-lesson {
+      height: 100%;
+      background: #1A56DB;
+      width: 40%;
+      border-radius: 9999px;
+    }
+    .progress-percent-text {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #1A56DB;
+    }
+
+    /* CSS Switch Toggle */
+    .switch-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #CBD5E1;
+      transition: .3s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #1A56DB;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Lesson Main Grid */
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Left Side: Lesson text and cards */
+    .lesson-main-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .breadcrumb-lesson {
+      font-size: 0.82rem;
+      color: #64748B;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .breadcrumb-lesson span {
+      color: #94A3B8;
+      font-weight: normal;
+      margin: 0 4px;
+    }
+    .lesson-main-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.5px;
+    }
+    .lesson-main-subtitle {
+      font-size: 0.95rem;
+      color: #64748B;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Steps Cards */
+    .lesson-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .lesson-step-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: border-color 0.2s ease;
+    }
+    .lesson-step-card:hover {
+      border-color: #CBD5E1;
+    }
+    .step-number-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1A56DB;
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .step-title-bold {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .step-desc-light {
+      font-size: 0.85rem;
+      color: #64748B;
+      line-height: 1.5;
+    }
+
+    /* Right Side: Video & Tips */
+    .lesson-media-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Video Player Mockup */
+    .video-mockup-card {
+      background: #000000;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16/10;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-thumbnail-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    .video-play-btn-circle {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      background: #1A56DB;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.3);
+    }
+    .video-play-btn-circle:hover {
+      transform: scale(1.08);
+      background: #154ec1;
+    }
+    .video-bottom-title-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      color: #FFFFFF;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Tips Card */
+    .tips-card-box {
+      background: #EBF2FF;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tips-header-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1A56DB;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tips-header-row svg {
+      width: 16px;
+      height: 16px;
+    }
+    .tips-content-text {
+      font-size: 0.88rem;
+      color: #1E293B;
+      line-height: 1.6;
+      font-style: italic;
+      margin: 0;
+    }
+
+
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .main-header {
+        padding: 0 1.5rem;
+      }
+      .db-content {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    /* Quiz Section */
+    .quiz-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-top: 2.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .quiz-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .quiz-question {
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .quiz-option {
+      border: 1.5px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .quiz-option:hover {
+      border-color: #1A56DB;
+      background: #F8FAFC;
+    }
+    .quiz-option.selected {
+      border-color: #1A56DB;
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .quiz-option-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #CBD5E1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .quiz-option.selected .quiz-option-radio {
+      border-color: #1A56DB;
+      background: #1A56DB;
+    }
+    .quiz-option.selected .quiz-option-radio::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: #FFFFFF;
+      border-radius: 50%;
+    }
+    .btn-submit-quiz {
+      background: #1A56DB;
+      color: #FFFFFF;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.15);
+      cursor: pointer;
+    }
+    .btn-submit-quiz:hover {
+      background: #154ec1;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="db-sidebar">
+      <div class="sidebar-brand">
+        <h2 class="brand-title">SignLearn</h2>
+        <span class="brand-subtitle">Learning Hub</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="achievements.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+            </svg>
+            Achievements
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="mentors.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Mentors
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="exercise.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Exercise
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="videos.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Videos
+          </a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="lesson.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Modules
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="results.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Results
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analysis.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+            Analysis
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-container">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-links">
+          <a href="dashboard.html" class="header-link">Home</a>
+          <a href="lesson.html" class="header-link active">Modules</a>
+          <a href="resources.html" class="header-link">Resources</a>
+          <a href="learn.html" class="header-link">Library</a>
+          
+          <div class="header-search">
+            <!-- Search Icon SVG -->
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" placeholder="Cari materi..." />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" aria-label="Notifications">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          
+          <button class="header-btn" aria-label="Help">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          
+          <div class="avatar-small">
+            <img src="assets/images/user_avatar.png" alt="Avatar" style="opacity: 0.9; object-position: top;" />
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT WRAPPER -->
+      <div class="main-container-scroll">
+      <!-- CONTENT -->
+      <main class="db-content">
+        
+        <!-- Progress and Toggle Mode -->
+        <div class="progress-toggle-row">
+          <div class="progress-column">
+            <span class="progress-label-caps">PROGRESS MODUL</span>
+            <div class="progress-bar-container-lesson">
+              <div class="progress-track-lesson">
+                <div class="progress-fill-lesson"></div>
+              </div>
+              <span class="progress-percent-text">40%</span>
+            </div>
+          </div>
+          
+          <div class="switch-group">
+            <span>Mode Kompleks</span>
+            <label class="switch">
+              <input type="checkbox" id="complexModeToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="lesson-grid">
+          <!-- Left side: Text, breadcrumb, and points -->
+          <div class="lesson-main-content">
+            <div class="breadcrumb-lesson">
+              <span id="lesson-module-text">Modul 2</span> <span>&gt;</span> <span class="breadcrumb-active">Materi Utama</span>
+            </div>
+            <h1 class="lesson-main-title" id="lesson-title">Percakapan Sehari-hari</h1>
+            <p class="lesson-main-subtitle" id="lesson-subtitle">
+              Belajar berinteraksi dengan teman tuli dimulai dari dasar-dasar etika dan isyarat sapaan yang umum digunakan. Mari kita pelajari tiga poin utama hari ini:
+            </p>
+ 
+            <div class="lesson-steps-list">
+              <!-- Point 1 -->
+              <div class="lesson-step-card">
+                <div class="step-number-circle">1</div>
+                <div class="step-text-group">
+                  <span class="step-title-bold">Menyapa orang lain dengan isyarat tangan.</span>
+                  <span class="step-desc-light">Gunakan lambaian tangan yang lembut atau isyarat 'Halo'.</span>
+                </div>
+              </div>
+ 
+              <!-- Point 2 -->
+              <div class="lesson-step-card">
+                <div class="step-number-circle">2</div>
+                <div class="step-text-group">
+                  <span class="step-title-bold">Menanyakan kabar secara sopan.</span>
+                  <span class="step-desc-light">Isyaratkan 'Apa Kabar' dengan ekspresi wajah yang ramah.</span>
+                </div>
+              </div>
+ 
+              <!-- Point 3 -->
+              <div class="lesson-step-card">
+                <div class="step-number-circle">3</div>
+                <div class="step-text-group">
+                  <span class="step-title-bold">Mengakhiri percakapan dengan senyuman.</span>
+                  <span class="step-desc-light">Ekspresi wajah adalah 70% dari bahasa isyarat.</span>
+                </div>
+              </div>
+            </div>
+ 
+            <!-- QUIZ SECTION -->
+            <div class="quiz-card">
+              <h3 class="quiz-title">📝 Uji Pemahamanmu</h3>
+              <p class="quiz-question">Manakah posisi tangan yang paling tepat saat melakukan isyarat sapaan 'Halo'?</p>
+              
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="false">
+                  <div class="quiz-option-radio"></div>
+                  Di atas kepala untuk menarik perhatian
+                </div>
+                <div class="quiz-option" data-correct="true">
+                  <div class="quiz-option-radio"></div>
+                  Di depan dada (signing space) agar mudah terlihat
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  <div class="quiz-option-radio"></div>
+                  Di samping badan dengan santai
+                </div>
+              </div>
+ 
+              <button class="btn-submit-quiz" id="submitQuizBtn">
+                Kirim Jawaban
+              </button>
+            </div>
+          </div>
+ 
+          <!-- Right side: Video and Tips -->
+          <div class="lesson-media-sidebar">
+            <!-- Video Mockup -->
+            <div class="video-mockup-card">
+              <img class="video-thumbnail-image" id="video-thumbnail" src="assets/images/hero_banner.png" alt="Demonstrasi Isyarat 'Halo'" />
+              <div class="video-play-btn-circle" id="playVideoBtn">▶</div>
+              <div class="video-bottom-title-bar" id="video-title-bar">Demonstrasi Isyarat 'Halo'</div>
+            </div>
+ 
+            <!-- Tips Box -->
+            <div class="tips-card-box">
+              <div class="tips-header-row">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                Tips Belajar
+              </div>
+              <p class="tips-content-text" id="tips-text">
+                "Pastikan posisi tangan Anda berada di depan dada (signing space) agar mudah terlihat oleh lawan bicara."
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+
+    </div>
+  </div>
+</div>
+
+  <script src="js/main.js"></script>
+  <script>
+    const courseLessons = {
+      alfabet: {
+        module: "Modul 1",
+        title: "Alfabet & Angka BISINDO",
+        subtitle: "Pelajari ejaan jari dasar, alfabet isyarat, dan angka 1-100 dalam BISINDO. Mari pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Hafalkan bentuk abjad A-Z.", desc: "Gunakan panduan gambar/video untuk membentuk setiap huruf dengan benar." },
+          { title: "Latih angka dasar 1-10.", desc: "Gerakan jari dengan stabil saat mengisyaratkan angka." },
+          { title: "Gunakan tangan dominan Anda.", desc: "Konsistensi tangan dominan mempermudah orang lain membaca isyarat Anda." }
+        ],
+        videoTitle: "Demonstrasi Alfabet A-Z",
+        quizQuestion: "Bagaimana posisi jari jempol saat mengisyaratkan huruf 'A' dalam BISINDO?",
+        quizOptions: [
+          { text: "Mengepalkan tangan dengan jempol rapat di samping telunjuk", correct: true },
+          { text: "Tangan terbuka lebar dengan semua jari rapat", correct: false },
+          { text: "Ibu jari masuk ke dalam kepalan empat jari lainnya", correct: false }
+        ],
+        tips: "Selalu latih kelenturan jari Anda setiap hari agar perpindahan huruf saat mengeja kata (finger spelling) menjadi lebih mulus."
+      },
+      sapaan: {
+        module: "Modul 1",
+        title: "Kata Sapaan & Perkenalan",
+        subtitle: "Belajar cara menyapa orang lain, memperkenalkan diri, dan isyarat kesopanan dasar. Mari pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Isyaratkan 'Halo' dengan ramah.", desc: "Lambaikan tangan dominan dengan lembut di dekat pelipis atau depan dada." },
+          { title: "Perkenalkan nama ejaan jari Anda.", desc: "Eja nama panggilan Anda dengan perlahan dan stabil." },
+          { title: "Gunakan kontak mata yang baik.", desc: "Kontak mata menunjukkan rasa hormat dan perhatian penuh saat berkomunikasi." }
+        ],
+        videoTitle: "Demonstrasi Isyarat Sapaan & Perkenalan",
+        quizQuestion: "Saat memperkenalkan nama Anda secara isyarat, apa yang paling penting untuk diperhatikan?",
+        quizOptions: [
+          { text: "Mengeja dengan secepat mungkin tanpa henti", correct: false },
+          { text: "Mengeja dengan tempo konstan di area signing space", correct: true },
+          { text: "Menunjuk wajah lawan bicara secara berulang", correct: false }
+        ],
+        tips: "Pertahankan posisi tangan Anda tetap stabil di depan dada (signing space) saat mengeja nama Anda agar mudah dibaca."
+      },
+      percakapan: {
+        module: "Modul 2",
+        title: "Percakapan Sehari-hari",
+        subtitle: "Belajar berinteraksi dengan teman tuli dimulai dari dasar-dasar etika dan isyarat sapaan yang umum digunakan. Mari kita pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Menyapa orang lain dengan isyarat tangan.", desc: "Gunakan lambaian tangan yang lembut atau isyarat 'Halo'." },
+          { title: "Menanyakan kabar secara sopan.", desc: "Isyaratkan 'Apa Kabar' dengan ekspresi wajah yang ramah." },
+          { title: "Mengakhiri percakapan dengan senyuman.", desc: "Ekspresi wajah adalah 70% dari bahasa isyarat." }
+        ],
+        videoTitle: "Demonstrasi Isyarat 'Halo'",
+        quizQuestion: "Manakah posisi tangan yang paling tepat saat melakukan isyarat sapaan 'Halo'?",
+        quizOptions: [
+          { text: "Di atas kepala untuk menarik perhatian", correct: false },
+          { text: "Di depan dada (signing space) agar mudah terlihat", correct: true },
+          { text: "Di samping badan dengan santai", correct: false }
+        ],
+        tips: "Pastikan posisi tangan Anda berada di depan dada (signing space) agar mudah terlihat oleh lawan bicara."
+      },
+      belanja: {
+        module: "Modul 2",
+        title: "Belanja & Arah Jalan",
+        subtitle: "Cara bernegosiasi belanja, memesan makanan di kafe, dan menanyakan serta menunjukkan arah. Mari pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Pahami isyarat nominal uang.", desc: "Latih gerakan angka puluhan ribu hingga ratusan ribu dalam BISINDO." },
+          { title: "Gunakan isyarat penunjuk arah.", desc: "Gunakan isyarat arah mata angin atau petunjuk arah yang universal." },
+          { title: "Tanyakan harga dengan ekspresi ramah.", desc: "Padukan isyarat 'Berapa' dengan ekspresi bertanya yang tepat." }
+        ],
+        videoTitle: "Demonstrasi Isyarat Belanja & Transaksi",
+        quizQuestion: "Bagaimana cara menunjukkan arah jalan dalam bahasa isyarat secara jelas?",
+        quizOptions: [
+          { text: "Gunakan isyarat penunjuk arah yang tegas disertai kontak mata ke arah tujuan", correct: true },
+          { text: "Melambaikan tangan dengan panik ke segala arah", correct: false },
+          { text: "Menepuk bahu lawan bicara berulang kali", correct: false }
+        ],
+        tips: "Saat mengisyaratkan nominal harga, jaga kestabilan gerakan tangan dominan Anda agar angka tidak salah terbaca."
+      },
+      medis: {
+        module: "Modul 3",
+        title: "Isyarat Medis & Darurat",
+        subtitle: "Kosa kata khusus medis untuk membantu dalam keadaan darurat atau saat berkomunikasi di rumah sakit. Mari pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Hafalkan isyarat 'Sakit' dan 'Tolong'.", desc: "Isyarat ini sangat krusial dalam situasi darurat medis." },
+          { title: "Latih isyarat 'Obat' dan 'Dokter'.", desc: "Isyaratkan profesi medis dan kebutuhan penanganan kesehatan." },
+          { title: "Tetap tenang saat berkomunikasi.", desc: "Ekspresi wajah yang tenang membantu menyampaikan detail keluhan fisik dengan lebih jelas." }
+        ],
+        videoTitle: "Demonstrasi Isyarat Medis & Darurat",
+        quizQuestion: "Kosa kata/isyarat darurat apa yang paling krusial untuk dipelajari pertama kali?",
+        quizOptions: [
+          { text: "Isyarat 'Tolong' dan menunjukkan lokasi yang 'Sakit'", correct: true },
+          { text: "Isyarat nama-nama zat kimia dan obat resep khusus", correct: false },
+          { text: "Isyarat jam operasional kunjungan dokter spesialis", correct: false }
+        ],
+        tips: "Menunjuk langsung ke bagian tubuh yang dirasa sakit sangat disarankan dan merupakan bagian sah dari komunikasi bahasa isyarat medis."
+      },
+      hukum: {
+        module: "Modul 3",
+        title: "Hukum & Terminologi Kerja",
+        subtitle: "Isyarat tingkat tinggi mengenai aturan hukum, bisnis kantor, dan dunia kerja professional. Mari pelajari tiga poin utama hari ini:",
+        steps: [
+          { title: "Pelajari isyarat 'Aturan' dan 'Kontrak'.", desc: "Latih ketegasan bentuk tangan saat menerjemahkan konsep hukum." },
+          { title: "Latih kosa kata rapat dan presentasi.", desc: "Kembangkan isyarat untuk 'Ide', 'Setuju', dan 'Keputusan'." },
+          { title: "Gunakan isyarat formal yang tepat.", desc: "Pastikan signing space rapi dan postur tubuh formal." }
+        ],
+        videoTitle: "Demonstrasi Isyarat Hukum & Rapat Kerja",
+        quizQuestion: "Saat menerjemahkan istilah hukum atau bisnis, hal apa yang menjadi prioritas utama?",
+        quizOptions: [
+          { text: "Kecepatan tinggi dalam mengayunkan tangan", correct: false },
+          { text: "Ketepatan makna isyarat agar tidak terjadi kesalahpahaman penafsiran", correct: true },
+          { text: "Ekspresi wajah teatrikal yang dramatis", correct: false }
+        ],
+        tips: "Istilah hukum dan bisnis seringkali membutuhkan ejaan jari (finger spelling) untuk kata-kata serapan asing. Latih akurasi ejaan kata Anda."
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Dynamic Course Loader
+      const urlParams = new URLSearchParams(window.location.search);
+      let courseKey = urlParams.get('course') || 'percakapan';
+      if (!courseLessons[courseKey]) courseKey = 'percakapan';
+      
+      const lesson = courseLessons[courseKey];
+
+      // Update DOM
+      document.getElementById('lesson-module-text').textContent = lesson.module;
+      document.getElementById('lesson-title').textContent = lesson.title;
+      document.getElementById('lesson-subtitle').textContent = lesson.subtitle;
+      document.getElementById('video-title-bar').textContent = lesson.videoTitle;
+      document.getElementById('video-thumbnail').alt = lesson.videoTitle;
+      document.getElementById('tips-text').textContent = `"${lesson.tips}"`;
+
+      // Update Steps list
+      const stepsContainer = document.querySelector('.lesson-steps-list');
+      if (stepsContainer && lesson.steps) {
+        stepsContainer.innerHTML = lesson.steps.map((step, index) => `
+          <div class="lesson-step-card">
+            <div class="step-number-circle">${index + 1}</div>
+            <div class="step-text-group">
+              <span class="step-title-bold">${step.title}</span>
+              <span class="step-desc-light">${step.desc}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Update Quiz Question & Options
+      const quizQuestion = document.querySelector('.quiz-question');
+      const quizOptions = document.querySelector('.quiz-options');
+      if (quizQuestion && lesson.quizQuestion) {
+        quizQuestion.textContent = lesson.quizQuestion;
+      }
+      if (quizOptions && lesson.quizOptions) {
+        quizOptions.innerHTML = lesson.quizOptions.map(opt => `
+          <div class="quiz-option" data-correct="${opt.correct}">
+            <div class="quiz-option-radio"></div>
+            ${opt.text}
+          </div>
+        `).join('');
+
+        // Bind click event listeners to new options
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            const group = opt.closest('.quiz-options');
+            group.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+          });
+        });
+      }
+
+      // Update Progress indicators
+      const progressFill = document.querySelector('.progress-fill-lesson');
+      const progressText = document.querySelector('.progress-percent-text');
+      let percent = '40%';
+      if (lesson.module === 'Modul 1') percent = '100%';
+      else if (lesson.module === 'Modul 2') percent = '65%';
+      else if (lesson.module === 'Modul 3') percent = '10%';
+      
+      if (progressFill) progressFill.style.width = percent;
+      if (progressText) progressText.textContent = percent;
+
+      // 2. Toggle Switch Toast Feedback
+      const toggle = document.getElementById('complexModeToggle');
+      if (toggle) {
+        toggle.addEventListener('change', () => {
+          const mode = toggle.checked ? 'diaktifkan' : 'dinonaktifkan';
+          window.showToast(`Mode Kompleks ${mode}!`, toggle.checked ? 'success' : 'info');
+        });
+      }
+
+      // 3. Play video click handler
+      const playBtn = document.getElementById('playVideoBtn');
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          window.showToast('Memutar video demonstrasi isyarat...', 'success');
+        });
+      }
+
+      // 4. Quiz validation
+      const submitQuizBtn = document.getElementById('submitQuizBtn');
+      if (submitQuizBtn) {
+        submitQuizBtn.addEventListener('click', () => {
+          const selectedOption = document.querySelector('.quiz-option.selected');
+          if (!selectedOption) {
+            window.showToast('Silakan pilih salah satu jawaban terlebih dahulu!', 'warning');
+            return;
+          }
+          const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+          if (isCorrect) {
+            window.showToast('Luar biasa! Jawaban Anda benar. 🌟', 'success');
+          } else {
+            window.showToast('Jawaban kurang tepat. Coba baca kembali Tips Belajar di sebelah kanan!', 'error');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

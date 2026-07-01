@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengaturan — SignLearn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Reset & Custom Layout overrides for settings page */
+    body {
+      background: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1E293B;
+    }
+    
+    /* Layout Wrapper */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styling */
+    .db-sidebar {
+      background: #F8FAFC;
+      border-right: 1px solid #E2E8F0;
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .db-sidebar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    .sidebar-brand {
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1A56DB;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .sidebar-item.active a {
+      background: #E8F0FE;
+      color: #1A56DB;
+    }
+    .sidebar-item a:hover:not(.active a) {
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+
+    /* Main Container */
+    .main-container {
+      background: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Nav */
+    .main-header {
+      height: 68px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 100;
+    }
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .header-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748B;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    .header-link.active {
+      color: #1A56DB;
+    }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: 240px;
+      margin-left: 2rem;
+    }
+    .header-search svg {
+      color: #94A3B8;
+      margin-right: 8px;
+    }
+    .header-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: #1E293B;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .header-btn {
+      background: none;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    .header-btn:hover {
+      background: #F1F5F9;
+    }
+    .avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      overflow: hidden;
+    }
+    .avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Content Area */
+    .db-content {
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      background: #FFFFFF;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-row {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #64748B;
+      margin-bottom: 0.5rem;
+    }
+    .breadcrumb-row a {
+      color: #64748B;
+      text-decoration: none;
+    }
+    .breadcrumb-row span {
+      margin: 0 6px;
+      color: #CBD5E1;
+    }
+
+    /* Headings */
+    .welcome-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .welcome-subtitle {
+      font-size: 1.05rem;
+      color: #64748B;
+      margin-top: 6px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Settings Panel Cards */
+    .settings-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid #F1F5F9;
+      padding-bottom: 1.25rem;
+    }
+    .card-header-icon {
+      width: 42px;
+      height: 42px;
+      background: #E8F0FE;
+      color: #1A56DB;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-header-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2;
+    }
+    .card-header-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin: 0;
+    }
+
+    /* Toggle Switch style */
+    .switch-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border: 1.5px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+    }
+    .switch-box:hover {
+      border-color: #CBD5E1;
+    }
+    .switch-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 1.5rem;
+    }
+    .switch-label-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .switch-label-subtitle {
+      font-size: 0.8rem;
+      color: #64748B;
+      line-height: 1.4;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #CBD5E1;
+      transition: .3s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #1A56DB;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Accessibility Columns */
+    .accessibility-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 2rem;
+    }
+    .video-size-panel {
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .video-size-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 1rem;
+    }
+    .video-size-row {
+      display: flex;
+      gap: 8px;
+    }
+    .video-size-btn {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      padding: 12px 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #64748B;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+    .video-size-btn:hover {
+      border-color: #CBD5E1;
+      color: #1E293B;
+    }
+    .video-size-btn.active {
+      border-color: #1A56DB;
+      color: #1A56DB;
+      background: #E8F0FE;
+    }
+
+    /* Profile Edit Area */
+    .profile-edit-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .profile-avatar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-large-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      overflow: hidden;
+      border: 3px solid #E2E8F0;
+    }
+    .avatar-large-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .change-pic-link {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1A56DB;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .change-pic-link:hover {
+      color: #154ec1;
+      text-decoration: underline;
+    }
+    .profile-fields-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: flex-end;
+    }
+    .form-group-custom {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-label-custom {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #475569;
+    }
+    .form-input-custom {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      color: #1E293B;
+      font-weight: 600;
+      outline: none;
+      box-sizing: border-box;
+      transition: border 0.2s ease;
+    }
+    .form-input-custom:focus {
+      border-color: #1A56DB;
+    }
+    .btn-update-profile {
+      background: #1A56DB;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 12px 24px;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.15);
+      border: none;
+      justify-content: center;
+    }
+    .btn-update-profile:hover {
+      background: #154ec1;
+      transform: translateY(-1px);
+    }
+    .btn-update-profile svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Grid Row structure */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .select-dropdown-box {
+      border: 1.5px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dropdown-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #475569;
+    }
+    .custom-select-element {
+      border: 1.5px solid #E2E8F0;
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1E293B;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Security Rows list */
+    .security-rows-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .security-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .security-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .security-row:first-child {
+      padding-top: 0;
+    }
+    .security-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .security-title-bold {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .security-desc-light {
+      font-size: 0.8rem;
+      color: #64748B;
+    }
+    .btn-security-action {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      color: #1E293B;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-security-action:hover {
+      border-color: #CBD5E1;
+      background: #F8FAFC;
+    }
+    .btn-security-action.active-green {
+      background: #ECFDF5;
+      border-color: #10B981;
+      color: #10B981;
+    }
+    .btn-security-action svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Dark Mode Settings Overrides */
+    body.dark-theme {
+      background: #0B0F19 !important;
+    }
+    body.dark-theme .main-container,
+    body.dark-theme .db-content {
+      background: #0B0F19 !important;
+    }
+    body.dark-theme .welcome-title,
+    body.dark-theme .card-header-title,
+    body.dark-theme .switch-label-title,
+    body.dark-theme .security-title-bold {
+      color: #F8FAFC !important;
+    }
+    body.dark-theme .welcome-subtitle,
+    body.dark-theme .switch-label-subtitle,
+    body.dark-theme .security-desc-light,
+    body.dark-theme .video-size-label,
+    body.dark-theme .dropdown-label,
+    body.dark-theme .form-label-custom {
+      color: #94A3B8 !important;
+    }
+    body.dark-theme .settings-card {
+      background: #0F172A !important;
+      border-color: #1E293B !important;
+    }
+    body.dark-theme .card-header-row {
+      border-bottom-color: #1E293B !important;
+    }
+    body.dark-theme .card-header-icon {
+      background: #1E3A8A !important;
+      color: #60A5FA !important;
+    }
+    body.dark-theme .switch-box,
+    body.dark-theme .video-size-panel,
+    body.dark-theme .select-dropdown-box {
+      background: #1E293B !important;
+      border-color: #1E293B !important;
+    }
+    body.dark-theme .custom-select-element,
+    body.dark-theme .form-input-custom {
+      background: #0F172A !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }
+    body.dark-theme .custom-select-element:focus,
+    body.dark-theme .form-input-custom:focus {
+      border-color: #3B82F6 !important;
+    }
+    body.dark-theme .video-size-btn,
+    body.dark-theme .btn-security-action {
+      background: #0F172A !important;
+      border-color: #1E293B !important;
+      color: #94A3B8 !important;
+    }
+    body.dark-theme .video-size-btn:hover,
+    body.dark-theme .btn-security-action:hover {
+      background: #1E293B !important;
+      color: #F8FAFC !important;
+      border-color: #334155 !important;
+    }
+    body.dark-theme .video-size-btn.active {
+      border-color: #3B82F6 !important;
+      color: #60A5FA !important;
+      background: #1E3A8A !important;
+    }
+    body.dark-theme .btn-security-action.active-green {
+      background: #064e3b !important;
+      border-color: #10B981 !important;
+      color: #34D399 !important;
+    }
+    body.dark-theme .security-row {
+      border-bottom-color: #1E293B !important;
+    }
+    body.dark-theme .change-pic-link {
+      color: #60A5FA !important;
+    }
+    body.dark-theme .change-pic-link:hover {
+      color: #93C5FD !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .accessibility-grid,
+      .two-col-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .main-header {
+        padding: 0 1.5rem;
+      }
+      .db-content {
+        padding: 2rem 1.5rem;
+      }
+      .profile-edit-row {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+      }
+      .profile-fields-col {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="db-sidebar">
+      <div class="sidebar-brand">
+        <h2 class="brand-title">SignLearn</h2>
+        <span class="brand-subtitle">Learning Hub</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="achievements.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+            </svg>
+            Achievements
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="mentors.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Mentors
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="exercise.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Exercise
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="videos.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Videos
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lesson.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Modules
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="results.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Results
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analysis.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+            Analysis
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-container">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-links">
+          <a href="dashboard.html" class="header-link">Home</a>
+          <a href="lesson.html" class="header-link">Modules</a>
+          <a href="resources.html" class="header-link">Resources</a>
+          <a href="learn.html" class="header-link">Library</a>
+          
+          <div class="header-search">
+            <!-- Search Icon SVG -->
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" placeholder="Cari materi..." />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" aria-label="Notifications">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          
+          <button class="header-btn" aria-label="Help">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          
+          <div class="avatar-small">
+            <img src="assets/images/user_avatar.png" alt="Avatar" style="opacity: 0.9; object-position: top;" />
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="db-content">
+        <!-- BREADCRUMBS -->
+        <div class="breadcrumb-row">
+          <a href="dashboard.html">Settings</a> <span>&rsaquo;</span> <span>General Preferences</span>
+        </div>
+
+        <h1 class="welcome-title">Manage Your Experience</h1>
+        <p class="welcome-subtitle">Customize how you learn and interact with SignLearn.</p>
+
+        <!-- 1. PROFILE SETTINGS -->
+        <section class="settings-card">
+          <div class="card-header-row">
+            <div class="card-header-icon">
+              <!-- User Icon SVG -->
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+            <h2 class="card-header-title">Profile Settings</h2>
+          </div>
+          
+          <div class="profile-edit-row">
+            <div class="profile-avatar-col">
+              <div class="avatar-large-circle">
+                <img src="assets/images/user_avatar.png" alt="Jane Doe Profile" />
+              </div>
+              <a class="change-pic-link" id="changePicLink">Change Picture</a>
+            </div>
+            
+            <div class="profile-fields-col">
+              <div class="form-group-custom">
+                <label class="form-label-custom" for="fullName">Full Name</label>
+                <input class="form-input-custom" type="text" id="fullName" value="Jane Doe" placeholder="Nama Lengkap" />
+              </div>
+              <div class="form-group-custom">
+                <label class="form-label-custom" for="emailAddress">Email Address</label>
+                <input class="form-input-custom" type="email" id="emailAddress" value="jane.doe@example.com" placeholder="nama@email.com" />
+              </div>
+              <button class="btn-update-profile" id="updateProfileBtn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                </svg>
+                Update Profile
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. ACCESSIBILITY PREFERENCES -->
+        <section class="settings-card">
+          <div class="card-header-row">
+            <div class="card-header-icon">
+              <!-- Accessibility Icon SVG -->
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+            </div>
+            <h2 class="card-header-title">Accessibility Preferences</h2>
+          </div>
+
+          <div class="accessibility-grid">
+            <!-- Left toggles -->
+            <div>
+              <!-- Toggle 1 -->
+              <div class="switch-box">
+                <div class="switch-text-group">
+                  <span class="switch-label-title">Simplify Visuals</span>
+                  <span class="switch-label-subtitle">Reduces animations and visual clutter for better focus.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="simplifyVisualsToggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <!-- Toggle 2 -->
+              <div class="switch-box">
+                <div class="switch-text-group">
+                  <span class="switch-label-title">High Contrast Mode</span>
+                  <span class="switch-label-subtitle">Increases text and UI element contrast for better visibility.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="highContrastToggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Right Video Size selector -->
+            <div class="video-size-panel">
+              <span class="video-size-label">Sign Language Interpreter Video Size</span>
+              <div class="video-size-row">
+                <button class="video-size-btn" data-size="small">Small</button>
+                <button class="video-size-btn active" data-size="medium">Medium</button>
+                <button class="video-size-btn" data-size="large">Large</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. NOTIFICATIONS & REGIONAL (2 COLS) -->
+        <div class="two-col-grid">
+          <!-- Notifications panel -->
+          <section class="settings-card" style="margin-bottom: 0;">
+            <div class="card-header-row">
+              <div class="card-header-icon">
+                <!-- Bell Icon SVG -->
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                </svg>
+              </div>
+              <h2 class="card-header-title">Notifications</h2>
+            </div>
+
+            <div class="switch-box">
+              <div class="switch-text-group">
+                <span class="switch-label-title" style="font-size: 0.9rem;">Email Alerts</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="emailAlertsToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-box" style="margin-bottom: 0;">
+              <div class="switch-text-group">
+                <span class="switch-label-title" style="font-size: 0.9rem;">In-app Notifications</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="inAppNotificationsToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </section>
+
+          <!-- Language & Regional panel -->
+          <section class="settings-card" style="margin-bottom: 0;">
+            <div class="card-header-row">
+              <div class="card-header-icon">
+                <!-- Globe Icon SVG -->
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h2a2 2 0 002-2V7.065M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h2 class="card-header-title">Language & Regional</h2>
+            </div>
+
+            <div class="select-dropdown-box">
+              <span class="dropdown-label">Display Language</span>
+              <select class="custom-select-element" id="languageSelector">
+                <option value="en" selected>English</option>
+                <option value="id">Bahasa Indonesia</option>
+                <option value="jp">日本語</option>
+              </select>
+            </div>
+          </section>
+        </div>
+
+        <!-- Spacer -->
+        <div style="height: 2rem;"></div>
+
+        <!-- 4. ACCOUNT SECURITY -->
+        <section class="settings-card">
+          <div class="card-header-row">
+            <div class="card-header-icon">
+              <!-- Shield Lock Icon SVG -->
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <h2 class="card-header-title">Account Security</h2>
+          </div>
+
+          <div class="security-rows-list">
+            <!-- Row 1: Password -->
+            <div class="security-row">
+              <div class="security-text-group">
+                <span class="security-title-bold">Password</span>
+                <span class="security-desc-light">Last changed 3 months ago</span>
+              </div>
+              <button class="btn-security-action" id="changePasswordBtn">
+                Change Password
+              </button>
+            </div>
+            
+            <!-- Hidden Change Password Form -->
+            <div id="changePasswordForm" class="hidden-security-form" style="display: none; padding: 15px; margin-bottom: 15px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Kata Sandi Saat Ini</label>
+                <input type="password" class="form-control" placeholder="Masukkan kata sandi lama">
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Kata Sandi Baru</label>
+                <input type="password" class="form-control" placeholder="Minimal 8 karakter">
+              </div>
+              <div class="form-group" style="margin-bottom: 15px;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Konfirmasi Kata Sandi Baru</label>
+                <input type="password" class="form-control" placeholder="Ketik ulang kata sandi baru">
+              </div>
+              <button class="btn-primary" onclick="savePassword(event)" style="font-size: 0.85rem; padding: 8px 16px;">Simpan Kata Sandi</button>
+            </div>
+
+            <!-- Row 2: 2FA -->
+            <div class="security-row">
+              <div class="security-text-group">
+                <span class="security-title-bold">Two-Factor Authentication</span>
+                <span class="security-desc-light">Secure your account with an extra layer of protection</span>
+              </div>
+              <button class="btn-security-action" id="tfaBtn">
+                <!-- Check Circle icon inside button -->
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span id="tfaBtnText">Enable 2FA</span>
+              </button>
+            </div>
+            
+            <!-- Hidden 2FA Form -->
+            <div id="tfaForm" class="hidden-security-form" style="display: none; padding: 15px; margin-bottom: 15px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">
+              <p style="font-size: 0.85rem; margin-bottom: 15px;">Pindai kode QR berikut menggunakan aplikasi Authenticator Anda, lalu masukkan 6 digit kode unik di bawah ini.</p>
+              <div style="text-align: center; margin-bottom: 15px;">
+                <svg width="80" height="80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #64748B;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 3h2v3h-2v-3zm3-3h3v3h-3v-3zm-3 0h-3v-3h3v3z"></path>
+                </svg>
+              </div>
+              <div class="form-group" style="margin-bottom: 15px;">
+                <label style="font-size: 0.85rem; font-weight: 600; text-align: left; display: block;">Kode Authenticator</label>
+                <input type="text" class="form-control" placeholder="000000" style="text-align: center; font-size: 1.2rem; letter-spacing: 4px;">
+              </div>
+              <button class="btn-primary" onclick="saveTfa(event)" style="font-size: 0.85rem; padding: 8px 16px;">Verifikasi & Aktifkan</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Change avatar link handler
+      const changePic = document.getElementById('changePicLink');
+      if (changePic) {
+        changePic.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.showToast("Mengubah foto profil... Fitur upload segera hadir!", "info");
+        });
+      }
+
+      // 2. Update profile handler
+      const updateBtn = document.getElementById('updateProfileBtn');
+      if (updateBtn) {
+        updateBtn.addEventListener('click', () => {
+          const name = document.getElementById('fullName').value.trim();
+          const email = document.getElementById('emailAddress').value.trim();
+          if (!name || !email) {
+            window.showToast("Nama dan email tidak boleh kosong!", "warning");
+            return;
+          }
+          window.showToast("Profil berhasil diperbarui!", "success");
+        });
+      }
+
+      // 3. Accessibility Toggles
+      const simplifyToggle = document.getElementById('simplifyVisualsToggle');
+      if (simplifyToggle) {
+        simplifyToggle.addEventListener('change', () => {
+          window.showToast(simplifyToggle.checked ? "Visual yang disederhanakan aktif" : "Visual normal aktif", "success");
+        });
+      }
+
+      const highContrastToggle = document.getElementById('highContrastToggle');
+      if (highContrastToggle) {
+        highContrastToggle.addEventListener('change', () => {
+          window.showToast(highContrastToggle.checked ? "Mode kontras tinggi aktif" : "Mode kontras tinggi nonaktif", "success");
+        });
+      }
+
+      // 4. Video Size pills
+      const sizeBtns = document.querySelectorAll('.video-size-btn');
+      sizeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          sizeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const size = btn.dataset.size;
+          const sizeLabels = { small: 'kecil', medium: 'sedang', large: 'besar' };
+          window.showToast(`Ukuran interpreter diatur ke: ${sizeLabels[size] || size}`, "success");
+        });
+      });
+
+      // 5. Notifications switches
+      const emailToggle = document.getElementById('emailAlertsToggle');
+      if (emailToggle) {
+        emailToggle.addEventListener('change', () => {
+          window.showToast(emailToggle.checked ? "Email alert diaktifkan" : "Email alert dinonaktifkan", "success");
+        });
+      }
+
+      const inAppToggle = document.getElementById('inAppNotificationsToggle');
+      if (inAppToggle) {
+        inAppToggle.addEventListener('change', () => {
+          window.showToast(inAppToggle.checked ? "Notifikasi dalam aplikasi diaktifkan" : "Notifikasi dalam aplikasi dinonaktifkan", "success");
+        });
+      }
+
+      // 6. Language selector
+      const langSelector = document.getElementById('languageSelector');
+      if (langSelector) {
+        langSelector.addEventListener('change', () => {
+          const selectedLang = langSelector.options[langSelector.selectedIndex].text;
+          window.showToast(`Bahasa diubah ke: ${selectedLang}`, "success");
+        });
+      }
+
+      // 7. Security Password handler
+      const changePw = document.getElementById('changePasswordBtn');
+      const changePwForm = document.getElementById('changePasswordForm');
+      if (changePw && changePwForm) {
+        changePw.addEventListener('click', () => {
+          if (changePwForm.style.display === 'none') {
+            changePwForm.style.display = 'block';
+            changePw.textContent = 'Batal';
+          } else {
+            changePwForm.style.display = 'none';
+            changePw.textContent = 'Change Password';
+          }
+        });
+      }
+      
+      window.savePassword = function(e) {
+        if(e) e.preventDefault();
+        document.getElementById('changePasswordForm').style.display = 'none';
+        document.getElementById('changePasswordBtn').textContent = 'Change Password';
+        window.showToast("Kata sandi berhasil diperbarui!", "success");
+      };
+
+      // 8. Security 2FA interactive handler
+      const tfaBtn = document.getElementById('tfaBtn');
+      const tfaBtnText = document.getElementById('tfaBtnText');
+      const tfaForm = document.getElementById('tfaForm');
+      if (tfaBtn && tfaBtnText && tfaForm) {
+        tfaBtn.addEventListener('click', () => {
+          const isActive = tfaBtn.classList.contains('active-green');
+          if (isActive) {
+            // Disable 2FA directly
+            tfaBtn.classList.remove('active-green');
+            tfaBtnText.textContent = "Enable 2FA";
+            window.showToast("Two-Factor Authentication dinonaktifkan.", "info");
+          } else {
+            // Toggle setup form
+            if (tfaForm.style.display === 'none') {
+              tfaForm.style.display = 'block';
+              tfaBtnText.textContent = 'Batal';
+            } else {
+              tfaForm.style.display = 'none';
+              tfaBtnText.textContent = 'Enable 2FA';
+            }
+          }
+        });
+      }
+
+      window.saveTfa = function(e) {
+        if(e) e.preventDefault();
+        document.getElementById('tfaForm').style.display = 'none';
+        
+        tfaBtn.classList.add('active-green');
+        tfaBtnText.textContent = "2FA Enabled";
+        window.showToast("Two-Factor Authentication berhasil diaktifkan! 🔒", "success");
+      };
+
+    });
+  </script>
+</body>
+</html>
