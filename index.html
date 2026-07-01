@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SignLearn — Belajar Bahasa Isyarat Indonesia</title>
+  <meta name="description" content="Platform belajar bahasa isyarat terbaik di Indonesia. Bergabunglah dengan ribuan siswa dan bangun jembatan komunikasi yang inklusif." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, #EBF2FF 0%, #F0F4FF 50%, #FEF9EE 100%);
+      padding-top: 68px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,86,219,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(26,86,219,0.1); border: 1px solid rgba(26,86,219,0.2);
+      color: var(--primary); font-size: 0.8rem; font-weight: 700;
+      padding: 5px 14px; border-radius: var(--radius-full);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 900; letter-spacing: -1.5px;
+      color: var(--text-primary); line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 2rem; max-width: 480px; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .hero-stats { display: flex; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .hero-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+    .hero-img-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+    .hero-img-card { background: #fff; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); overflow: hidden; width: 100%; border: 1px solid var(--border); }
+    .hero-img-card img { width: 100%; height: 420px; object-fit: cover; }
+    .hero-float-badge {
+      position: absolute; background: #fff; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg); padding: 0.75rem 1rem;
+      display: flex; align-items: center; gap: 0.6rem; border: 1px solid var(--border);
+    }
+    .hero-float-badge.badge-1 { bottom: -20px; left: -30px; }
+    .hero-float-badge.badge-2 { top: -20px; right: -20px; }
+    .badge-icon { font-size: 1.5rem; }
+    .badge-text-sm { font-size: 0.7rem; color: var(--text-muted); }
+    .badge-text-main { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); }
+    .feature-card { padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); transition: var(--transition); background: var(--surface); }
+    .feature-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .feature-icon { width: 56px; height: 56px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.25rem; }
+    .feature-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+    .steps-wrap { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+    .step-item { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); transition: var(--transition); }
+    .step-item:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .step-num { width: 44px; height: 44px; border-radius: var(--radius-full); flex-shrink: 0; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; font-size: 1rem; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(26,86,219,0.35); }
+    .step-content h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .step-content p { font-size: 0.875rem; color: var(--text-secondary); }
+    .course-card { padding: 1.5rem; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); transition: var(--transition); }
+    .course-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .course-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+    .course-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .course-meta { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .course-progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 6px; }
+    .testi-card { padding: 1.75rem; border-radius: var(--radius-lg); background: var(--bg); border: 1px solid var(--border); transition: var(--transition); }
+    .testi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .testi-stars { color: var(--accent); font-size: 1rem; margin-bottom: 0.75rem; }
+    .testi-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+    .testi-avatar { width: 42px; height: 42px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: #fff; }
+    .testi-name { font-size: 0.9rem; font-weight: 700; }
+    .testi-role { font-size: 0.75rem; color: var(--text-muted); }
+    .cta-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .cta-title { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1rem; }
+    .cta-subtitle { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-bottom: 2rem; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: var(--primary); font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .btn-outline-white { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-img-wrap { display: none; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand"><div class="brand-icon">🤟</div>SignLearn</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="#how-it-works">Cara Kerja</a></li>
+      <li><a href="#popular-courses">Kursus</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-ghost">Masuk</a>
+      <a href="register.html" class="btn btn-primary">Daftar Gratis</a>
+    </div>
+    <button class="nav-hamburger">☰</button>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-tag">Platform SIBI #1 di Indonesia</div>
+          <h1 class="hero-title">Belajar <span class="highlight">Bahasa Isyarat</span><br/>dengan Cara Menyenangkan</h1>
+          <p class="hero-desc">Bergabunglah dengan 50.000+ siswa yang membangun jembatan komunikasi inklusif melalui Sistem Isyarat Bahasa Indonesia (SIBI) secara interaktif.</p>
+          <div class="hero-actions">
+            <a href="register.html" class="btn btn-primary btn-lg">🚀 Mulai Belajar Gratis</a>
+            <a href="learn.html" class="btn btn-outline btn-lg">📚 Lihat Kursus</a>
+          </div>
+          <div class="hero-stats">
+            <div><div class="hero-stat-num"><span data-count="50000">0</span>+</div><div class="hero-stat-label">Siswa Aktif</div></div>
+            <div><div class="hero-stat-num"><span data-count="120">0</span>+</div><div class="hero-stat-label">Materi Pelajaran</div></div>
+            <div><div class="hero-stat-num"><span data-count="98">0</span>%</div><div class="hero-stat-label">Kepuasan Siswa</div></div>
+          </div>
+        </div>
+        <div class="hero-img-wrap">
+          <div class="hero-img-card animate-float">
+            <img src="assets/images/sign_hands.png" alt="Bahasa Isyarat" />
+          </div>
+          <div class="hero-float-badge badge-1"><div class="badge-icon">🏆</div><div><div class="badge-text-sm">Pencapaian</div><div class="badge-text-main">Level 5 Dicapai!</div></div></div>
+          <div class="hero-float-badge badge-2"><div class="badge-icon">🔥</div><div><div class="badge-text-sm">Streak Hari Ini</div><div class="badge-text-main">14 Hari Berturut!</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--surface);">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:3rem;">
+        <div class="section-label">✨ Fitur Unggulan</div>
+        <h2 class="section-title">Cara Belajar yang Efektif & Menyenangkan</h2>
+        <p class="section-subtitle mt-2">Dirancang khusus agar siapa pun bisa belajar bahasa isyarat dengan mudah, kapan saja dan di mana saja.</p>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#EBF2FF;">🎬</div><h3 class="feature-title">Video Interaktif</h3><p class="feature-desc">Setiap gerakan isyarat ditampilkan dengan video HD dari berbagai sudut pandang agar mudah dipahami.</p></div>
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#FEF3C7;">🎮</div><h3 class="feature-title">Belajar Lewat Kuis</h3><p class="feature-desc">Latihan interaktif berbasis gamifikasi yang membuat belajar terasa seperti bermain game yang seru.</p></div>
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#ECFDF5;">📈</div><h3 class="feature-title">Lacak Progres</h3><p class="feature-desc">Dashboard personal yang menampilkan perkembangan belajar, streak harian, dan pencapaian Anda.</p></div>
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#FEF2F2;">🤝</div><h3 class="feature-title">Komunitas Inklusif</h3><p class="feature-desc">Bergabung dengan forum aktif bersama tutor tuli, penerjemah, dan sesama pelajar yang suportif.</p></div>
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#F3E8FF;">📱</div><h3 class="feature-title">Bisa di HP & Laptop</h3><p class="feature-desc">Desain responsif sempurna di semua perangkat. Belajar di mana saja, kapan saja tanpa hambatan.</p></div>
+        <div class="feature-card" data-animate><div class="feature-icon" style="background:#ECFDF5;">🏅</div><h3 class="feature-title">Sertifikat Resmi</h3><p class="feature-desc">Dapatkan sertifikat digital yang dapat dibagikan di LinkedIn setelah menyelesaikan kursus.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works" style="background:var(--bg);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+        <div>
+          <div class="section-label">📋 Cara Kerja</div>
+          <h2 class="section-title">Mulai dalam 3 Langkah Mudah</h2>
+          <p style="color:var(--text-secondary);margin:0.75rem 0 0;line-height:1.7;">Tidak perlu pengalaman sebelumnya. Siapa pun bisa mulai belajar hari ini juga.</p>
+          <div class="steps-wrap">
+            <div class="step-item" data-animate><div class="step-num">1</div><div class="step-content"><h3>Daftar Akun Gratis</h3><p>Buat akun dalam 30 detik. Tidak perlu kartu kredit.</p></div></div>
+            <div class="step-item" data-animate><div class="step-num">2</div><div class="step-content"><h3>Pilih Kursus Sesuai Level</h3><p>Dari pemula, menengah, hingga mahir. Ikuti tes penempatan jika sudah punya dasar.</p></div></div>
+            <div class="step-item" data-animate><div class="step-num">3</div><div class="step-content"><h3>Belajar & Raih Sertifikat</h3><p>Selesaikan materi, kerjakan kuis, dan dapatkan sertifikat resmi.</p></div></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;">
+          <img src="assets/images/hero_banner.png" alt="Cara Belajar" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%;max-width:480px;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="popular-courses" style="background:var(--bg);">
+    <div class="container">
+      <div class="flex-between" style="margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+        <div><div class="section-label">📚 Kursus Populer</div><h2 class="section-title">Mulai dari yang Paling Diminati</h2></div>
+        <a href="learn.html" class="btn btn-outline">Lihat Semua →</a>
+      </div>
+      <div class="grid-3">
+        <div class="course-card" data-animate><div class="course-emoji">🖐️</div><div class="badge badge-success" style="margin-bottom:0.75rem;">Pemula</div><h3 class="course-title">Alfabet & Angka SIBI</h3><div class="course-meta"><span>👤 12.4K siswa</span><span>⏱ 2 jam</span></div><div class="progress-bar" style="margin-bottom:0.5rem;"><div class="progress-fill" style="width:0%"></div></div><div class="course-progress-label"><span style="color:var(--text-muted)">Belum dimulai</span><span style="font-weight:600;">0%</span></div><a href="register.html" class="btn btn-primary btn-full" style="margin-top:0.75rem;">Mulai Belajar</a></div>
+        <div class="course-card" data-animate><div class="course-emoji">👋</div><div class="badge badge-accent" style="margin-bottom:0.75rem;">Menengah</div><h3 class="course-title">Percakapan Sehari-hari</h3><div class="course-meta"><span>👤 8.7K siswa</span><span>⏱ 4 jam</span></div><div class="progress-bar" style="margin-bottom:0.5rem;"><div class="progress-fill" style="width:0%"></div></div><div class="course-progress-label"><span style="color:var(--text-muted)">Belum dimulai</span><span style="font-weight:600;">0%</span></div><a href="register.html" class="btn btn-primary btn-full" style="margin-top:0.75rem;">Mulai Belajar</a></div>
+        <div class="course-card" data-animate><div class="course-emoji">🏥</div><div class="badge badge-primary" style="margin-bottom:0.75rem;">Mahir</div><h3 class="course-title"> Bahasa Isyarat Medis & Darurat</h3><div class="course-meta"><span>👤 4.2K siswa</span><span>⏱ 6 jam</span></div><div class="progress-bar" style="margin-bottom:0.5rem;"><div class="progress-fill" style="width:0%"></div></div><div class="course-progress-label"><span style="color:var(--text-muted)">Belum dimulai</span><span style="font-weight:600;">0%</span></div><a href="register.html" class="btn btn-primary btn-full" style="margin-top:0.75rem;">Mulai Belajar</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="testimonials" style="background:var(--surface);">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:3rem;"><div class="section-label">💬 Testimoni</div><h2 class="section-title">Apa Kata Mereka?</h2></div>
+      <div class="grid-3">
+        <div class="testi-card" data-animate><div class="testi-stars">★★★★★</div><p class="testi-text">"Saya bisa berkomunikasi dengan teman tuli dalam 2 bulan! Video tutorialnya sangat jelas dan sistem kuis-nya bikin ketagihan."</p><div class="testi-author"><div class="testi-avatar" style="background:linear-gradient(135deg,#1A56DB,#F59E0B);">A</div><div><div class="testi-name">Anisa Rahmawati</div><div class="testi-role">Mahasiswi, Yogyakarta</div></div></div></div>
+        <div class="testi-card" data-animate><div class="testi-stars">★★★★★</div><p class="testi-text">"Sebagai guru, saya sangat terbantu. Murid tuli saya kini bisa terlibat lebih aktif di kelas. Terima kasih SignLearn!"</p><div class="testi-author"><div class="testi-avatar" style="background:linear-gradient(135deg,#10B981,#1A56DB);">B</div><div><div class="testi-name">Budi Santoso</div><div class="testi-role">Guru SD, Surabaya</div></div></div></div>
+        <div class="testi-card" data-animate><div class="testi-stars">★★★★★</div><p class="testi-text">"Interface-nya modern banget, tidak membosankan. Belajar 30 menit tiap malam dan sudah ngerti banyak gerakan dasar!"</p><div class="testi-author"><div class="testi-avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444);">D</div><div><div class="testi-name">Dewi Kartika</div><div class="testi-role">Karyawan Swasta, Jakarta</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container" style="position:relative;z-index:1;">
+      <h2 class="cta-title">Siap Membangun Komunikasi<br/>yang Lebih Inklusif?</h2>
+      <p class="cta-subtitle">Daftar sekarang dan dapatkan akses gratis ke 20+ pelajaran pertama.</p>
+      <div class="cta-actions">
+        <a href="register.html" class="btn btn-white btn-lg">🚀 Daftar Gratis Sekarang</a>
+        <a href="login.html" class="btn btn-outline-white btn-lg">Sudah punya akun? Masuk</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><div class="footer-brand">🤟 SignLearn</div><p class="footer-desc">Platform belajar bahasa isyarat Indonesia terpercaya. Membangun komunikasi yang inklusif untuk semua.</p><div class="footer-social" style="margin-top:1.5rem;"><a href="#">📘</a><a href="#">🐦</a><a href="#">📸</a><a href="#">▶️</a></div></div>
+        <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="learn.html">Kursus</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="#">Sertifikat</a></li></ul></div>
+        <div><div class="footer-heading">Perusahaan</div><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Karir</a></li></ul></div>
+        <div><div class="footer-heading">Bantuan</div><ul class="footer-links"><li><a href="#">FAQ</a></li><li><a href="#">Kontak</a></li><li><a href="#">Privasi</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 SignLearn. Hak Cipta Dilindungi.</span><span>Dibuat dengan ❤️ untuk komunitas tuli Indonesia</span></div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
