@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the React build directory (dist)
-app.use(express.static(path.join(__dirname, 'dist')));
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname, '')));
 
 // --- API Routes ---
 // This is a simple status endpoint to verify the API is working
@@ -22,9 +22,9 @@ app.get('/api/status', (req, res) => {
   });
 });
 
-// Serve index.html as the default page for any non-API requests
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// Serve index.html as the default page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start the server
