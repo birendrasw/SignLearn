@@ -36,6 +36,21 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+// POST endpoint for mentor registration application
+app.post('/api/mentors/apply', (req, res) => {
+  const { name, email, expertise, experience } = req.body;
+  console.log(`[REST API] Pendaftaran Mentor Baru:`);
+  console.log(`- Nama: ${name}`);
+  console.log(`- Email: ${email}`);
+  console.log(`- Keahlian: ${expertise}`);
+  console.log(`- Pengalaman: ${experience}`);
+  
+  return res.json({
+    status: 'success',
+    message: `Pendaftaran berhasil dikirim! Terima kasih ${name}, kami akan segera menghubungi Anda.`
+  });
+});
+
 // Serve index.html as the default page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));

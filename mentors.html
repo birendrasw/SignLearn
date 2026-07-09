@@ -975,19 +975,19 @@
       <form onsubmit="submitRegisterMentor(event)">
         <div class="form-group-modal">
           <label>Nama Lengkap</label>
-          <input type="text" placeholder="Masukkan nama lengkap" required />
+          <input type="text" id="mentorName" placeholder="Masukkan nama lengkap" required />
         </div>
         <div class="form-group-modal">
           <label>Email</label>
-          <input type="email" placeholder="Masukkan email aktif" required />
+          <input type="email" id="mentorEmail" placeholder="Masukkan email aktif" required />
         </div>
         <div class="form-group-modal">
           <label>Keahlian (Contoh: SIBI, Budaya Tuli)</label>
-          <input type="text" placeholder="Masukkan bidang keahlian" required />
+          <input type="text" id="mentorExpertise" placeholder="Masukkan bidang keahlian" required />
         </div>
         <div class="form-group-modal">
           <label>Pengalaman Singkat</label>
-          <textarea rows="3" placeholder="Ceritakan pengalaman Anda secara singkat" required></textarea>
+          <textarea rows="3" id="mentorExperience" placeholder="Ceritakan pengalaman Anda secara singkat" required></textarea>
         </div>
         <button type="submit" class="btn-confirm-schedule" style="margin-top: 10px;">Kirim Pendaftaran</button>
       </form>
@@ -1087,9 +1087,39 @@
 
     window.submitRegisterMentor = function(e) {
       e.preventDefault();
-      closeRegisterMentorModal();
-      window.showToast('Pendaftaran Anda telah dikirim. Kami akan segera menghubungi Anda!', 'success');
-      e.target.reset();
+      const name = document.getElementById('mentorName')?.value || '';
+      const email = document.getElementById('mentorEmail')?.value || '';
+      const expertise = document.getElementById('mentorExpertise')?.value || '';
+      const experience = document.getElementById('mentorExperience')?.value || '';
+
+      const btn = e.target.querySelector('[type="submit"]');
+      const origText = btn.innerHTML;
+      btn.innerHTML = 'Mengirim...';
+      btn.disabled = true;
+
+      fetch('http://localhost:3000/api/mentors/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, expertise, experience })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Gagal mengirim pendaftaran mentor.');
+        return res.json();
+      })
+      .then(data => {
+        closeRegisterMentorModal();
+        window.showToast(data.message, 'success');
+        e.target.reset();
+      })
+      .catch(err => {
+        window.showToast(err.message, 'error');
+      })
+      .finally(() => {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      });
     };
 
     // Ask Mentor Modal Functions
