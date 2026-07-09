@@ -852,9 +852,127 @@ body.dark-theme .bottom-nav-item:hover {
   background: #1E293B;
 }
 
+/* ==========================================
+   INTERACTIVE MOBILE SLIDE MENUS & DRAWERS
+   ========================================== */
+.hamburger-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-right: 0.5rem;
+}
+.hamburger-menu-btn:hover {
+  background: #F1F5F9;
+}
+body.dark-theme .hamburger-menu-btn {
+  color: #94A3B8;
+}
+body.dark-theme .hamburger-menu-btn:hover {
+  background: #334155;
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 1.8rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  transition: color 0.2s;
+}
+.sidebar-close-btn:hover {
+  color: #EF4444;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.sidebar-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (max-width: 768px) {
   .bottom-nav {
     display: block;
+  }
+  
+  .hamburger-menu-btn {
+    display: flex;
+  }
+  .sidebar-close-btn {
+    display: block;
+  }
+  
+  /* Slide Menu (Sidebar Drawer) */
+  .db-sidebar {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: -280px !important; /* Hidden offscreen left */
+    width: 260px;
+    height: 100vh;
+    z-index: 10000;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none;
+  }
+  .db-sidebar.show-sidebar {
+    transform: translateX(280px) !important; /* Slide drawer in */
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Slide Atas (Horizontal Scrollable Top Navbar Links) */
+  .main-header {
+    padding: 0 1rem !important;
+    gap: 0.5rem;
+    justify-content: flex-start !important;
+  }
+  
+  .header-links {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+    gap: 1.25rem !important;
+    flex: 1;
+    padding: 0.5rem 0;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .header-links::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .header-link {
+    flex-shrink: 0;
+    font-size: 0.95rem;
+  }
+  
+  .header-search {
+    display: none !important; /* Hide search bar inside header on mobile to give links space */
   }
 }
 

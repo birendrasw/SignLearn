@@ -4,6 +4,72 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // --- Dynamic Responsive Sidebar Drawer Logic ---
+  const header = document.querySelector('.main-header');
+  const sidebar = document.querySelector('.db-sidebar');
+  
+  if (header && sidebar) {
+    // 1. Inject Hamburger Button into Header (if not already there)
+    if (!header.querySelector('.hamburger-menu-btn')) {
+      const hamBtn = document.createElement('button');
+      hamBtn.className = 'hamburger-menu-btn';
+      hamBtn.setAttribute('aria-label', 'Open Menu');
+      hamBtn.innerHTML = `
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      `;
+      hamBtn.addEventListener('click', () => window.toggleSidebar());
+      header.insertBefore(hamBtn, header.firstChild);
+    }
+    
+    // 2. Inject Close Button into Sidebar (if not already there)
+    if (!sidebar.querySelector('.sidebar-close-btn')) {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'sidebar-close-btn';
+      closeBtn.setAttribute('aria-label', 'Close Menu');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', () => window.closeSidebar());
+      sidebar.appendChild(closeBtn);
+    }
+  }
+
+  // Define global toggle handlers
+  window.toggleSidebar = function() {
+    const sidebarEl = document.querySelector('.db-sidebar');
+    let overlayEl = document.querySelector('.sidebar-overlay');
+    
+    if (!overlayEl) {
+      overlayEl = document.createElement('div');
+      overlayEl.className = 'sidebar-overlay';
+      document.body.appendChild(overlayEl);
+      overlayEl.addEventListener('click', () => window.closeSidebar());
+    }
+    
+    if (sidebarEl) {
+      overlayEl.style.display = 'block';
+      setTimeout(() => {
+        sidebarEl.classList.toggle('show-sidebar');
+        overlayEl.classList.toggle('show');
+      }, 10);
+    }
+  };
+
+  window.closeSidebar = function() {
+    const sidebarEl = document.querySelector('.db-sidebar');
+    const overlayEl = document.querySelector('.sidebar-overlay');
+    
+    if (sidebarEl) sidebarEl.classList.remove('show-sidebar');
+    if (overlayEl) {
+      overlayEl.classList.remove('show');
+      setTimeout(() => {
+        if (!overlayEl.classList.contains('show')) {
+          overlayEl.style.display = 'none';
+        }
+      }, 300);
+    }
+  };
+
   // --- Navbar scroll effect ---
   const navbar = document.querySelector('.navbar');
   if (navbar) {
