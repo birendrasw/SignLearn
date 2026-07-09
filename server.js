@@ -25,24 +25,20 @@ app.get('/api/status', (req, res) => {
 // POST endpoint for user login validation
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  
-  if (email && password) {
-    // Extract name from the email prefix (e.g. birendra@email.com -> Birendra)
-    const emailPrefix = email.split('@')[0];
-    const displayName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
-    
+  // Standard mock credentials for testing the connection
+  if (email === 'birendra@email.com' && password === 'password123') {
     return res.json({
       status: 'success',
-      token: 'mock-jwt-token-dynamic',
+      token: 'mock-jwt-token-987654321',
       user: {
-        name: displayName,
+        name: 'Birendra',
         email: email
       }
     });
   }
-  return res.status(400).json({
+  return res.status(401).json({
     status: 'error',
-    message: 'Harap masukkan email dan kata sandi.'
+    message: 'Email atau password salah! Gunakan (birendra@email.com / password123)'
   });
 });
 
