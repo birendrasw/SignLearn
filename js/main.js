@@ -82,13 +82,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value.trim() : '';
+
+      if (!email || !password) {
+        window.showToast("Email dan kata sandi harus diisi!", "warning");
+        return;
+      }
+
       const btn = loginForm.querySelector('[type="submit"]');
       const origText = btn.innerHTML;
       btn.innerHTML = '<span class="spinner"></span> Masuk...';
       btn.disabled = true;
-      setTimeout(() => {
-        window.location.href = 'dashboard.html';
-      }, 1200);
+
+      // POST to our local Express Login API
+      fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(err => { throw new Error(err.message || 'Gagal masuk'); });
+        }
+        return res.json();
+      })
+      .then(data => {
+        window.showToast(`Selamat datang kembali, ${data.user.name}!`, "success");
+        // Save simple user session state
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.token);
+        
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1200);
+      })
+      .catch(err => {
+        window.showToast(err.message, "error");
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      });
     });
   }
 

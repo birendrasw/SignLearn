@@ -22,6 +22,26 @@ app.get('/api/status', (req, res) => {
   });
 });
 
+// POST endpoint for user login validation
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+  // Standard mock credentials for testing the connection
+  if (email === 'birendra@email.com' && password === 'password123') {
+    return res.json({
+      status: 'success',
+      token: 'mock-jwt-token-987654321',
+      user: {
+        name: 'Birendra',
+        email: email
+      }
+    });
+  }
+  return res.status(401).json({
+    status: 'error',
+    message: 'Email atau password salah! Gunakan (birendra@email.com / password123)'
+  });
+});
+
 // Serve index.html as the default page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
