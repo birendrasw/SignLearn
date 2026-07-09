@@ -87,11 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = emailInput ? emailInput.value.trim() : '';
       const password = passwordInput ? passwordInput.value.trim() : '';
 
-      if (!email || !password) {
-        window.showToast("Email dan kata sandi harus diisi!", "warning");
-        return;
-      }
-
       const btn = loginForm.querySelector('[type="submit"]');
       const origText = btn.innerHTML;
       btn.innerHTML = '<span class="spinner"></span> Masuk...';
