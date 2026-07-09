@@ -112,6 +112,33 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(bottomNav);
   }
 
+  // --- Dynamic Header Links Active State Highlighting ---
+  const headerLinksContainer = document.querySelector('.header-links');
+  if (headerLinksContainer) {
+    const currentPath = window.location.pathname.toLowerCase();
+    const links = headerLinksContainer.querySelectorAll('.header-link');
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href) {
+        const hrefLower = href.toLowerCase();
+        link.classList.remove('active');
+        
+        // Highlight based on current path match
+        if (currentPath.includes(hrefLower)) {
+          link.classList.add('active');
+        } else if (currentPath.includes('dashboard') && hrefLower.includes('dashboard')) {
+          link.classList.add('active');
+        } else if ((currentPath.includes('lesson') || currentPath.includes('exercise') || currentPath.includes('videos')) && hrefLower.includes('lesson')) {
+          link.classList.add('active');
+        } else if (currentPath.includes('resources') && hrefLower.includes('resources')) {
+          link.classList.add('active');
+        } else if (currentPath.includes('learn') && hrefLower.includes('learn')) {
+          link.classList.add('active');
+        }
+      }
+    });
+  }
+
   // --- Navbar scroll effect ---
   const navbar = document.querySelector('.navbar');
   if (navbar) {
