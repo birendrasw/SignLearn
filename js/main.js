@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hamBtn.className = 'hamburger-menu-btn';
       hamBtn.setAttribute('aria-label', 'Open Menu');
       hamBtn.innerHTML = `
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+        <div class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       `;
       hamBtn.addEventListener('click', () => window.toggleSidebar());
       header.insertBefore(hamBtn, header.firstChild);
