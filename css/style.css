@@ -919,7 +919,7 @@ body.dark-theme .hamburger-icon span {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  z-index: 9998;
+  z-index: 999998 !important;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -949,9 +949,13 @@ body.dark-theme .hamburger-icon span {
     left: -280px !important; /* Hidden offscreen left */
     width: 260px;
     height: 100vh;
-    z-index: 10000;
+    z-index: 999999 !important; /* Force sidebar to stack above everything else */
+    background-color: #FFFFFF !important; /* Solid background to prevent overlap translucency */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: none;
+  }
+  body.dark-theme .db-sidebar {
+    background-color: #0F172A !important; /* Solid dark background */
   }
   .db-sidebar.show-sidebar {
     transform: translateX(280px) !important; /* Slide drawer in */
