@@ -934,14 +934,10 @@ body.dark-theme .hamburger-icon span {
 @media (max-width: 768px) {
   .app-layout {
     grid-template-columns: 1fr;
-    overflow-x: hidden !important;
     width: 100% !important;
-    max-width: 100vw !important;
   }
   .main-container {
-    overflow-x: hidden !important;
     width: 100% !important;
-    max-width: 100vw !important;
   }
   .bottom-nav {
     display: block;

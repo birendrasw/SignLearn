@@ -35,10 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.appendChild(closeBtn);
     }
 
-    // 3. Move sidebar to document.body to escape parent container stacking context
-    if (sidebar.parentElement !== document.body) {
-      document.body.appendChild(sidebar);
-    }
   }
 
   // Define global toggle handlers
