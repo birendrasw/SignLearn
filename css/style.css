@@ -953,8 +953,8 @@ body.dark-theme .hamburger-icon span {
   /* Slide Menu (Sidebar Drawer) */
   .db-sidebar {
     display: block !important;
-    position: fixed;
-    top: 0;
+    position: fixed !important; /* Force fixed positioning on mobile to override local sticky rules */
+    top: 0 !important;
     left: -280px !important; /* Hidden offscreen left */
     width: 260px;
     height: 100vh;
