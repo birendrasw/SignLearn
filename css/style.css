@@ -974,17 +974,18 @@ body.dark-theme .hamburger-icon span {
   /* Slide Atas (Horizontal Scrollable Top Navbar Links) */
   .main-header {
     padding: 0 1rem !important;
-    gap: 0.5rem;
-    justify-content: flex-start !important;
+    gap: 0.75rem !important;
+    justify-content: space-between !important;
   }
   
   .header-links {
     display: flex !important;
     overflow-x: auto !important;
+    min-width: 0 !important; /* Crucial to enable internal scrolling inside a flex container */
+    flex-grow: 1 !important;
     white-space: nowrap !important;
     flex-wrap: nowrap !important;
     gap: 1.25rem !important;
-    flex: 1;
     padding: 0.5rem 0;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
@@ -997,6 +998,12 @@ body.dark-theme .hamburger-icon span {
   .header-link {
     flex-shrink: 0;
     font-size: 0.95rem;
+  }
+  
+  .header-actions {
+    display: flex !important;
+    gap: 0.75rem !important;
+    flex-shrink: 0 !important;
   }
   
   .header-search {
