@@ -66,11 +66,11 @@ const App = () => {
   };
 
   return (
-    <div className={`app-container ${highContrast ? 'high-contrast-mode' : ''}`}>
+    <div className={`app-layout ${highContrast ? 'high-contrast-mode' : ''}`}>
       {/* Desktop Sidebar (uses old classes mapped to style_old.css) */}
       <aside className="db-sidebar">
         <div className="sidebar-brand">
-          <h2 className="brand-title">SignLearn</h2>
+          <h2 class="brand-title">SignLearn</h2>
           <span class="brand-subtitle">Learning Hub</span>
         </div>
         <ul className="sidebar-menu">
@@ -90,30 +90,29 @@ const App = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="main-content">
-        <header className="main-header" style={{ padding: '0 24px', height: '68px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(16px)', position: 'sticky', top: 0, zIndex: 30 }}>
-          <div className="header-links" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+      <main className="main-container">
+        <header className="main-header">
+          <div className="header-links">
             {navItems.map(item => (
               <a 
                 key={item.id}
                 href="#" 
                 onClick={(e) => { e.preventDefault(); setActiveTab(item.id); }} 
                 className={`header-link ${activeTab === item.id ? 'active' : ''}`}
-                style={{ fontSize: '0.9rem', fontWeight: 500, color: activeTab === item.id ? 'var(--primary)' : 'var(--text-secondary)' }}
               >
                 {item.label}
               </a>
             ))}
           </div>
           
-          <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div className="avatar-small" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, overflow: 'hidden' }}>
-              <span style={{ fontSize: '0.85rem', color: '#475569' }}>B</span>
+          <div className="header-actions">
+            <div className="avatar-small">
+              <span style={{ fontSize: '0.85rem', color: '#475569', fontWeight: 700 }}>B</span>
             </div>
           </div>
         </header>
 
-        <div className="db-content" style={{ padding: '24px 0', maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="db-content">
           
           {/* ==================== DASHBOARD TAB ==================== */}
           {activeTab === 'dashboard' && (
