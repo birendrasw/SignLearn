@@ -729,6 +729,22 @@
           </div>
         </div>
 
+        <!-- REST API STATUS CARD -->
+        <div class="card" id="api-status-card" style="padding: 1.25rem 2rem; margin-bottom: 2.5rem; border-left: 4px solid #3B82F6; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border-radius: var(--radius-lg); border-top: 1px solid #E2E8F0; border-right: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="api-status-icon" style="width: 40px; height: 40px; border-radius: 50%; background: #EFF6FF; display: flex; align-items: center; justify-content: center; color: #3B82F6; transition: all 0.3s ease;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 id="api-status-title" style="font-size: 0.95rem; font-weight: 700; color: #1E293B; margin: 0;">Koneksi REST API</h4>
+              <p id="api-status-subtitle" style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0; transition: all 0.3s ease;">Menghubungkan ke server backend...</p>
+            </div>
+          </div>
+          <span id="api-status-badge" style="font-size: 0.85rem; font-weight: 700; color: #3B82F6; background: #EFF6FF; padding: 4px 12px; border-radius: 9999px; transition: all 0.3s ease;">Connecting</span>
+        </div>
+
         <!-- ACHIEVEMENTS SECTION -->
         <section class="achievements-section">
           <div class="achievements-header">
@@ -858,6 +874,43 @@
         e.target.textContent = 'Show Less';
       }
     }
+
+    // Fetch REST API Status on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('http://localhost:3000/api/status')
+        .then(res => {
+          if (!res.ok) throw new Error('API server returned error');
+          return res.json();
+        })
+        .then(data => {
+          const card = document.getElementById('api-status-card');
+          const icon = document.getElementById('api-status-icon');
+          const subtitle = document.getElementById('api-status-subtitle');
+          const badge = document.getElementById('api-status-badge');
+
+          card.style.borderLeft = '4px solid #10B981';
+          icon.style.background = '#D1FAE5';
+          icon.style.color = '#10B981';
+          subtitle.textContent = `Online! Respon: "${data.message}" | Waktu Server: ${new Date(data.timestamp).toLocaleTimeString()}`;
+          badge.textContent = 'Connected';
+          badge.style.color = '#10B981';
+          badge.style.background = '#D1FAE5';
+        })
+        .catch(err => {
+          const card = document.getElementById('api-status-card');
+          const icon = document.getElementById('api-status-icon');
+          const subtitle = document.getElementById('api-status-subtitle');
+          const badge = document.getElementById('api-status-badge');
+
+          card.style.borderLeft = '4px solid #EF4444';
+          icon.style.background = '#FEE2E2';
+          icon.style.color = '#EF4444';
+          subtitle.innerHTML = 'Offline (API backend lokal mati). Jalankan <code>npm start</code> di terminal utama untuk mengaktifkan.';
+          badge.textContent = 'Offline';
+          badge.style.color = '#EF4444';
+          badge.style.background = '#FEE2E2';
+        });
+    });
   </script>
 </body>
 </html>
