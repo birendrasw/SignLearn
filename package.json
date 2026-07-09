@@ -1,0 +1,26 @@
+{
+  "name": "signlearn",
+  "version": "1.0.0",
+  "description": "Aplikasi Belajar Bahasa Isyarat",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birendrasw/SignLearn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/birendrasw/SignLearn/issues"
+  },
+  "homepage": "https://github.com/birendrasw/SignLearn#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
