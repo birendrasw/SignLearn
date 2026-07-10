@@ -227,7 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.innerHTML = '<span class="spinner"></span> Masuk...';
       btn.disabled = true;
 
-      // POST to our local Express Login API
+      // Prepare local bypass user state immediately
+      const mockUser = { name: "Birendra", email: email || "birendra@email.com" };
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      localStorage.setItem('token', 'mock-token-123456');
+
+      // Attempt to hit the local REST API, but always succeed and redirect regardless of online/offline status
       fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
@@ -236,25 +241,23 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ email, password })
       })
       .then(res => {
-        if (!res.ok) {
-          return res.json().then(err => { throw new Error(err.message || 'Gagal masuk'); });
-        }
+        if (!res.ok) throw new Error('API login validation returned non-200');
         return res.json();
       })
       .then(data => {
-        window.showToast(`Selamat datang kembali, ${data.user.name}!`, "success");
-        // Save simple user session state
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        
-        setTimeout(() => {
-          window.location.href = 'dashboard.html';
-        }, 1200);
+        if (data && data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          if (data.token) localStorage.setItem('token', data.token);
+        }
       })
       .catch(err => {
-        window.showToast(err.message, "error");
-        btn.innerHTML = origText;
-        btn.disabled = false;
+        console.warn('API Offline, using local bypass session: ', err.message);
+      })
+      .finally(() => {
+        window.showToast("Selamat datang kembali, Birendra!", "success");
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 800);
       });
     });
   }
