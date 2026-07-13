@@ -858,7 +858,7 @@ body.dark-theme .bottom-nav-item:hover {
    INTERACTIVE MOBILE SLIDE MENUS & DRAWERS
    ========================================== */
 .hamburger-menu-btn {
-  display: flex;
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
@@ -929,19 +929,6 @@ body.dark-theme .hamburger-icon span {
 .sidebar-overlay.show {
   opacity: 1;
   pointer-events: auto;
-}
-
-/* Desktop Sidebar Collapse Toggle */
-.app-layout {
-  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.app-layout.sidebar-collapsed {
-  grid-template-columns: 0px 1fr !important;
-}
-.app-layout.sidebar-collapsed .db-sidebar {
-  transform: translateX(-280px);
-  opacity: 0;
-  visibility: hidden;
 }
 
 @media (max-width: 768px) {

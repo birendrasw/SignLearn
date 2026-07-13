@@ -40,16 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Define global toggle handlers
   window.toggleSidebar = function() {
     const sidebarEl = document.querySelector('.db-sidebar');
-    
-    if (window.innerWidth > 768) {
-      const layout = document.querySelector('.app-layout');
-      if (layout) {
-        layout.classList.toggle('sidebar-collapsed');
-      }
-      return;
-    }
-    
     let overlayEl = document.querySelector('.sidebar-overlay');
+    
     if (!overlayEl) {
       overlayEl = document.createElement('div');
       overlayEl.className = 'sidebar-overlay';
@@ -67,14 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.closeSidebar = function() {
-    if (window.innerWidth > 768) {
-      const layout = document.querySelector('.app-layout');
-      if (layout) {
-        layout.classList.add('sidebar-collapsed');
-      }
-      return;
-    }
-    
     const sidebarEl = document.querySelector('.db-sidebar');
     const overlayEl = document.querySelector('.sidebar-overlay');
     
