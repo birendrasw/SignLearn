@@ -971,33 +971,18 @@ body.dark-theme .hamburger-icon span {
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
   }
   
-  /* Slide Atas (Horizontal Scrollable Top Navbar Links) */
   .main-header {
     padding: 0 1rem !important;
     gap: 0.75rem !important;
     justify-content: space-between !important;
   }
   
+  /* Hide Top Navbar Links on Mobile */
   .header-links {
-    display: flex !important;
-    overflow-x: auto !important;
-    min-width: 0 !important; /* Crucial to enable internal scrolling inside a flex container */
-    flex-grow: 1 !important;
-    white-space: nowrap !important;
-    flex-wrap: nowrap !important;
-    gap: 1.25rem !important;
-    padding: 0.5rem 0;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    display: none !important;
   }
-  .header-links::-webkit-scrollbar {
-    display: none;
-  }
-  
   .header-link {
-    flex-shrink: 0;
-    font-size: 0.95rem;
+    display: none !important;
   }
   
   .header-actions {

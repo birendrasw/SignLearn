@@ -80,10 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const currentPath = window.location.pathname.toLowerCase();
     const isHome = currentPath.includes('dashboard') || currentPath === '/' || currentPath.endsWith('signlearn/');
-    const isModules = currentPath.includes('lesson') || currentPath.includes('learn') || currentPath.includes('exercise') || currentPath.includes('videos');
-    const isMentors = currentPath.includes('mentors');
-    const isAchievements = currentPath.includes('achievements') || currentPath.includes('results');
-    const isProfile = currentPath.includes('profile') || currentPath.includes('settings') || currentPath.includes('analysis');
+    const isModules = currentPath.includes('lesson') || currentPath.includes('exercise') || currentPath.includes('videos');
+    const isResources = currentPath.includes('resources');
+    const isLibrary = currentPath.includes('learn');
 
     bottomNav.innerHTML = `
       <div class="bottom-nav-inner">
@@ -92,20 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <span>Home</span>
         </a>
         <a href="lesson.html" class="bottom-nav-item ${isModules ? 'active' : ''}">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
           <span>Modules</span>
         </a>
-        <a href="mentors.html" class="bottom-nav-item ${isMentors ? 'active' : ''}">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <span>Mentors</span>
+        <a href="resources.html" class="bottom-nav-item ${isResources ? 'active' : ''}">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></svg>
+          <span>Resources</span>
         </a>
-        <a href="achievements.html" class="bottom-nav-item ${isAchievements ? 'active' : ''}">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
-          <span>Achievements</span>
-        </a>
-        <a href="profile.html" class="bottom-nav-item ${isProfile ? 'active' : ''}">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-          <span>Profile</span>
+        <a href="learn.html" class="bottom-nav-item ${isLibrary ? 'active' : ''}">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Library</span>
         </a>
       </div>
     `;
