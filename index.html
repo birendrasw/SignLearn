@@ -98,6 +98,26 @@
       .hero-inner { grid-template-columns: 1fr; }
       .hero-img-wrap { display: none; }
       .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .nav-actions { display: none !important; }
+      .bottom-nav-auth { display: flex !important; }
+      .bottom-nav { display: none !important; }
+    }
+    .bottom-nav-auth {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #FFFFFF;
+      padding: 1rem;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+      z-index: 10000;
+      gap: 1rem;
+      border-top: 1px solid #E2E8F0;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .bottom-nav-auth .btn {
+      flex: 1;
+      text-align: center;
     }
   </style>
 </head>
@@ -230,6 +250,10 @@
       <div class="footer-bottom"><span>© 2026 SignLearn. Hak Cipta Dilindungi.</span><span>Dibuat dengan ❤️ untuk komunitas tuli Indonesia</span></div>
     </div>
   </footer>
+  <div class="bottom-nav-auth">
+    <a href="login.html" class="btn btn-ghost" style="flex: 1; text-align: center; border: 1px solid #E2E8F0;">Masuk</a>
+    <a href="register.html" class="btn btn-primary" style="flex: 1; text-align: center;">Daftar</a>
+  </div>
   <script src="js/main.js"></script>
 </body>
 </html>
