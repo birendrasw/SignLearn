@@ -74,7 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // --- Dynamic Mobile Bottom Nav Generation ---
-  if (!document.querySelector('.bottom-nav')) {
+  const currentPathStr = window.location.pathname.toLowerCase();
+  const isAuthOrLanding = currentPathStr.includes('login') || currentPathStr.includes('register') || currentPathStr.includes('index') || currentPathStr === '/' || currentPathStr.endsWith('signlearn/');
+
+  if (!document.querySelector('.bottom-nav') && !isAuthOrLanding) {
     const bottomNav = document.createElement('nav');
     bottomNav.className = 'bottom-nav';
     
